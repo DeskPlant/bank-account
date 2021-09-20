@@ -12,13 +12,13 @@ namespace Layerd.Repository
     //read      read stuff from file
     //update    update/change stuff from file
     //delete    delete some stuff from file
-    public class TransactionRepository : IRepository
+    public class HashSetRepository : IRepository
     {
-        public readonly string SourceFile = @"C:\Users\patri\source\repos\Layerd\Layerd\transactions.json";
+        public readonly string SourceFile = @"..\..\..\transactions.json";
 
-        private List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        private HashSet<Transaction> Transactions { get; set; } = new HashSet<Transaction>();
 
-        public TransactionRepository()
+        public HashSetRepository()
         {
             ReadAllFromFile();
         }
@@ -52,9 +52,9 @@ namespace Layerd.Repository
             //transforms a string into Transactions
             try
             {
-                Transactions = JsonConvert.DeserializeObject<List<Transaction>>(jsonString);
+                Transactions = JsonConvert.DeserializeObject<HashSet<Transaction>>(jsonString);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 streamReader.Close();
                 UpdateFile();
@@ -68,7 +68,17 @@ namespace Layerd.Repository
 
         public IEnumerable<Transaction> FilterByName(string transactionName)
         {
-            return Transactions.Where(t => t.Name == transactionName);
+            List<Transaction> listOfFilteredTransactions = new List<Transaction>();
+
+            foreach (Transaction transaction in Transactions)
+            {
+                if (transaction.Name == transactionName)
+                {
+                    listOfFilteredTransactions.Add(transaction);
+                }
+            }
+
+            return listOfFilteredTransactions;
         }
 
         public IEnumerable<Transaction> FilterWithDate(FilterType type, DateTime dateTime)
@@ -84,7 +94,6 @@ namespace Layerd.Repository
             }
 
             return listOfFilteredTransactions;
-
         }
 
         public IEnumerable<Transaction> FilterBetweenDates(DateTime first, DateTime second)
@@ -100,24 +109,24 @@ namespace Layerd.Repository
             }
 
             return listOfTransactionsBetween;
-
         }
 
         //updates a single transaction with the given id
         //returns updated transaction if found
         //returns null if not found
-        public Transaction UpdateTransaction(Guid transactionId, Transaction updateData)
+        public Transaction UpdateTransaction(Transaction transaction)
         {
-            foreach (Transaction transaction in Transactions)
+            foreach (Transaction tr in Transactions)
             {
-                if (transaction.Id == transactionId)
+                if (tr.Id == transaction.Id)
                 {
-                    transaction.Name = updateData.Name;
-                    transaction.Type = updateData.Type;
-                    transaction.Amount = updateData.Amount;
-                    transaction.Date = updateData.Date;
+                    tr.Name = transaction.Name;
+                    tr.Type = transaction.Type;
+                    tr.Amount = transaction.Amount;
+                    tr.Date = transaction.Date;
 
-                    return transaction;
+                    UpdateFile();
+                    return tr;
                 }
             }
 

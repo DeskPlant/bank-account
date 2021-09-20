@@ -41,9 +41,9 @@ namespace Layerd.Service
             return Repository.FilterWithDate(type, dateTime);
         }
 
-        public Transaction UpdateTransaction(Guid transactionId, Transaction updateData)
+        public Transaction UpdateTransaction(Transaction transaction)
         {
-            return Repository.UpdateTransaction(transactionId,updateData);
+            return Repository.UpdateTransaction(transaction);
         }
     }
 }

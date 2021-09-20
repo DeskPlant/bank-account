@@ -8,7 +8,7 @@ namespace Layerd
     {
         public static void Main()
         {
-            IRepository repository = new TransactionRepository();
+            IRepository repository = new DictionaryRepository();
             IService service = new TransactionService(repository);
             IUI ui = new TransactionUI(service);
             BankAccounts bankAccount = new BankAccounts(ui);

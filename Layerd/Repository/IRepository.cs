@@ -25,6 +25,6 @@ namespace Layerd.Repository
 
         public IEnumerable<Transaction> FilterBetweenDates(DateTime first, DateTime second);
 
-        public Transaction UpdateTransaction(Guid transactionId, Transaction updateData);
+        public Transaction UpdateTransaction(Transaction transaction);
     }
 }

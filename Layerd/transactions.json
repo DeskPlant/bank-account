@@ -19,5 +19,12 @@
     "Name": "memes",
     "Amount": 7532.0,
     "Type": 1
+  },
+  {
+    "Id": "b1ed90bb-d75d-49df-be60-d488b80ad8ab",
+    "Date": "2222-12-22T22:22:22",
+    "Name": "22",
+    "Amount": 22.0,
+    "Type": 0
   }
 ]

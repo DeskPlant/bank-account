@@ -14,34 +14,20 @@ namespace Layerd.Domain
 
         public TransactionType Type { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Transaction transaction &&
+                   Id.Equals(transaction.Id);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+
         public override string ToString()
         {
             return Id.ToString() + " " + Date.ToString() + " " + Name + " " + Amount + " " + Type.ToString();
         }
     }
-
-
-    /*     
-{
-    [
-        {
-            "Id" : "0f8fad5b-d9cb-469f-a165-70867728950e",
-            "Date" : "10/09/2021 00:04:54",
-            "Name" : "Rent money",
-            "Amount": 102,
-            "Type": "Outgoing"
-        },
-        {
-            "Id" : "0f8fad5b-d9cb-469f-a165-70867728950e",
-            "Date" : "10/09/2021 00:04:54",
-            "Name" : "Rent money",
-            "Amount": 102,
-            "Type": "Outgoing"
-        },
-    ]
-}
-
-
-     
-     */
 }

@@ -42,7 +42,7 @@ namespace Layerd.UI
             bool succeded;
             do
             {
-                string format = "yyyy/MM/dd hh:mm:ss";
+                string format = "yyyy/MM/dd HH:mm:ss";
                 Console.WriteLine($"Give a date and time in the following format: {format}");
                 string dateString = Console.ReadLine();
                 succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
@@ -119,7 +119,7 @@ namespace Layerd.UI
             bool succeded;
             do
             {
-                string format = "yyyy/MM/dd hh:mm:ss";
+                string format = "yyyy/MM/dd HH:mm:ss";
                 Console.WriteLine($"Give the first date and time in the following format: {format}");
                 string dateString = Console.ReadLine();
                 succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
@@ -128,7 +128,7 @@ namespace Layerd.UI
 
             do
             {
-                string format = "yyyy/MM/dd hh:mm:ss";
+                string format = "yyyy/MM/dd HH:mm:ss";
                 Console.WriteLine($"Give the second date and time in the following format: {format}");
                 string dateString = Console.ReadLine();
                 succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out secondDateTime);
@@ -168,7 +168,7 @@ namespace Layerd.UI
             bool succeded;
             do
             {
-                string format = "yyyy/MM/dd hh:mm:ss";
+                string format = "yyyy/MM/dd HH:mm:ss";
                 Console.WriteLine($"Give a date and time in the following format: {format}");
                 string dateString = Console.ReadLine();
                 succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
@@ -212,7 +212,7 @@ namespace Layerd.UI
 
             IEnumerable<Transaction> listOfTransactions;
 
-            listOfTransactions = Service.UpdateTransaction(transactionId,updateData);
+            //listOfTransactions = Service.UpdateTransaction(transactionId,transaction);
 
            
             
