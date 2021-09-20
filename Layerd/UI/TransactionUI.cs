@@ -196,22 +196,25 @@ namespace Layerd.UI
 
         public void UpdateTransaction()
         {
+            // parse string into guid
            
             Console.WriteLine("Type the ID of the transaction you want to modify");
+            string id = Console.ReadLine();
+            
+            Guid idSearch = Guid.Parse(id);
 
-            // parse string into guid
+            Console.WriteLine(idSearch);
+
+            
+            
 
             Transaction transaction;
-            Guid transactionId = Guid.NewGuid();
-            string id = ID.ToString();
-            id = Console.ReadLine();
 
             IEnumerable<Transaction> listOfTransactions;
 
             listOfTransactions = Service.UpdateTransaction(transactionId,updateData);
 
-            Console.WriteLine("Write the new name of the transaction");
-            string newName = Console.ReadLine();
+           
             
 
         }
