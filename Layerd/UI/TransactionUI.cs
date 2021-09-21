@@ -199,18 +199,22 @@ namespace Layerd.UI
         public void UpdateTransaction()
         {
             // parse string into guid
-           
-            Console.WriteLine("Type the ID of the transaction you want to modify");
-            string id = Console.ReadLine();
-            Guid idSearch = Guid.Parse(id);
-            Console.WriteLine(idSearch);
+            
+            bool succeded;
+            Guid idSearch;
+            do
+            {
+                Console.WriteLine("Type the ID of the transaction you want to modify");
+                succeded = Guid.TryParse(Console.ReadLine(), out idSearch);
+            }
+            while (!succeded);
+
 
             Console.WriteLine("Enter the new Values for your Updated Transaction");
             Console.WriteLine();
                 
 
             DateTime newDateTime;
-            bool succeded;
             do
             {
                 string format = "yyyy/MM/dd HH:mm:ss";
