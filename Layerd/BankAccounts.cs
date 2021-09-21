@@ -33,41 +33,51 @@ namespace Layerd
                         case 1:
                             {
                                 UI.DisplayMenu();
+                                Console.WriteLine();
                                 break;
                             }
                         case 2:
                             {
                                 UI.AddTransaction();
+                                Console.WriteLine("Transaction added successfully!");
+                                Console.WriteLine();
                                 break;
                             }
                         case 3:
                             {
                                 UI.DisplayAllTransactions();
+                                Console.WriteLine();
                                 break;
                             }
                         case 4:
                             {
                                 UI.FilterByName();
+                                Console.WriteLine();
                                 break;
                             }
                         case 5:
                             {
                                 UI.FilterByDate();
+                                Console.WriteLine();
                                 break;
                             }
                         case 6:
                             {
                                 UI.FilterBetweenDates();
+                                Console.WriteLine();
                                 break;
                             }
                         case 7:
                             {
                                 UI.UpdateTransaction();
+                                Console.WriteLine("Transaction Updated Successfully!");
+                                Console.WriteLine();
                                 break;
                             }
                         default:
                             {
                                 Console.WriteLine("No such command.");
+                                Console.WriteLine();
                                 break;
                             }
                     }

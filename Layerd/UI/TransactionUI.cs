@@ -9,7 +9,7 @@ namespace Layerd.UI
 {
     public class TransactionUI : IUI
     {
-        private IService Service;
+        private readonly IService Service;
 
         public TransactionUI(IService service)
         {
@@ -112,7 +112,7 @@ namespace Layerd.UI
 
         public void FilterBetweenDates()
         {
-            string filterType;
+            
             DateTime dateTime;
             DateTime secondDateTime;
 
@@ -204,7 +204,9 @@ namespace Layerd.UI
             Guid idSearch;
             do
             {
-                Console.WriteLine("Type the ID of the transaction you want to modify");
+                string format = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
+                Console.WriteLine($"Give the ID of the Transaction you want to update in the following format: {format}");
+                
                 succeded = Guid.TryParse(Console.ReadLine(), out idSearch);
             }
             while (!succeded);
@@ -238,7 +240,7 @@ namespace Layerd.UI
             string newTransactionType;
             do
             {
-                Console.WriteLine($"Is your New transaction {TransactionType.Incoming} or {TransactionType.Outgoing}?");
+                Console.WriteLine($"Is your Updated transaction {TransactionType.Incoming} or {TransactionType.Outgoing}?");
                 newTransactionType = Console.ReadLine();
             }
             while (newTransactionType != TransactionType.Outgoing.ToString() && newTransactionType != TransactionType.Incoming.ToString());

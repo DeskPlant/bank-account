@@ -1,9 +1,9 @@
 [
   {
     "Id": "6e28db57-52e4-4d1b-82e3-0e9cedb92896",
-    "Date": "2000-02-02T05:05:05",
-    "Name": "scam",
-    "Amount": 2000.0,
+    "Date": "2003-05-05T05:05:05",
+    "Name": "Desk plant lovin",
+    "Amount": 5.0,
     "Type": 0
   },
   {
@@ -15,16 +15,30 @@
   },
   {
     "Id": "1ec77f15-f0ad-4c81-a425-01029301bec0",
-    "Date": "2001-02-05T05:05:05",
-    "Name": "i love ducks!",
+    "Date": "2002-02-05T06:06:06",
+    "Name": "ducks r lovely",
     "Amount": 95.0,
-    "Type": 1
+    "Type": 0
   },
   {
     "Id": "b1ed90bb-d75d-49df-be60-d488b80ad8ab",
     "Date": "2222-12-22T22:22:22",
     "Name": "22",
     "Amount": 22.0,
+    "Type": 0
+  },
+  {
+    "Id": "41ec8bff-c850-4102-a31d-841ebecaf3fa",
+    "Date": "2000-06-19T02:10:05",
+    "Name": "the cringy gemini was born",
+    "Amount": 7233.0,
+    "Type": 1
+  },
+  {
+    "Id": "b9011dd6-7788-4f5a-b6a9-eda4f2f42c7c",
+    "Date": "2000-09-11T05:05:05",
+    "Name": "plane",
+    "Amount": 911.0,
     "Type": 0
   }
 ]

@@ -38,7 +38,6 @@ namespace Layerd.Repository
         {
             //transforms Transactions into a string
             string jsonString = JsonConvert.SerializeObject(Transactions, Formatting.Indented);
-
             StreamWriter streamWriter = new StreamWriter(SourceFile);
             streamWriter.Write(jsonString);
             streamWriter.Close();
