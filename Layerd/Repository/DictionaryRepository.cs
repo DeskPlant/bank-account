@@ -18,16 +18,17 @@ namespace Layerd.Repository
             ReadAllFromFile();
         }
 
-        public void AddTransaction(Transaction transaction)
+        public Transaction AddTransaction(Transaction transaction)
         {
             if (Transactions.ContainsKey(transaction.Id))
             {
-                throw new Exception("Transaction already in dictionary");
+                return null;
             }
             else
             {
                 Transactions.Add(transaction.Id, transaction);
                 UpdateFile();
+                return Transactions[transaction.Id];
             }
         }
 

@@ -11,6 +11,11 @@ namespace Layerd.UI
     {
         private readonly IService Service;
 
+        public void UpdateFile()
+        {
+            Service.UpdateFile();
+        }
+
         public TransactionUI(IService service)
         {
             Service = service;
@@ -79,7 +84,14 @@ namespace Layerd.UI
                 Type = type
             };
 
-            Service.AddTransaction(transaction);
+            if (null == Service.AddTransaction(transaction))
+            {
+                Console.WriteLine("Failed adding transaction.");
+            }
+            else
+            {
+                Console.WriteLine("Transaction added succesfully.");
+            }
         }
 
         public void DisplayAllTransactions()
@@ -112,7 +124,7 @@ namespace Layerd.UI
 
         public void FilterBetweenDates()
         {
-            
+
             DateTime dateTime;
             DateTime secondDateTime;
 
@@ -180,7 +192,7 @@ namespace Layerd.UI
 
             listOfTransactions = Service.FilterWithDate(type, dateTime);
 
-        
+
 
             if (listOfTransactions.Any())
             {
@@ -199,14 +211,14 @@ namespace Layerd.UI
         public void UpdateTransaction()
         {
             // parse string into guid
-            
+
             bool succeded;
             Guid idSearch;
             do
             {
                 string format = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
                 Console.WriteLine($"Give the ID of the Transaction you want to update in the following format: {format}");
-                
+
                 succeded = Guid.TryParse(Console.ReadLine(), out idSearch);
             }
             while (!succeded);
@@ -214,7 +226,7 @@ namespace Layerd.UI
 
             Console.WriteLine("Enter the new Values for your Updated Transaction");
             Console.WriteLine();
-                
+
 
             DateTime newDateTime;
             do
@@ -255,9 +267,14 @@ namespace Layerd.UI
                 Type = type
             };
 
-            Service.UpdateTransaction(transaction);
-            
-
+            if (null == Service.UpdateTransaction(transaction))
+            {
+                Console.WriteLine("Failed updating transaction.");
+            }
+            else
+            {
+                Console.WriteLine("Transaction updated successfully!");
+            }
         }
     }
 }

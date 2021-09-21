@@ -23,10 +23,17 @@ namespace Layerd.Repository
             ReadAllFromFile();
         }
 
-        public void AddTransaction(Transaction transaction)
+        public Transaction AddTransaction(Transaction transaction)
         {
-            Transactions.Add(transaction);
-            UpdateFile();
+            if (Transactions.Add(transaction))
+            {
+                UpdateFile();
+                return transaction;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public IEnumerable<Transaction> GetAllTransactions()

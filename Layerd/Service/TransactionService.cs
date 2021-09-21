@@ -9,14 +9,19 @@ namespace Layerd.Service
     {
         public IRepository Repository { get; set; }
 
+        public void UpdateFile()
+        {
+            Repository.UpdateFile();
+        }
+
         public TransactionService(IRepository repository)
         {
             Repository = repository;
         }
 
-        public void AddTransaction(Transaction transaction)
+        public Transaction AddTransaction(Transaction transaction)
         {
-            Repository.AddTransaction(transaction);
+            return Repository.AddTransaction(transaction);
         }
 
         public IEnumerable<Transaction> GetAllTransactions()

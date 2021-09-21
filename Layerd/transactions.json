@@ -1,9 +1,9 @@
 [
   {
     "Id": "6e28db57-52e4-4d1b-82e3-0e9cedb92896",
-    "Date": "2003-05-05T05:05:05",
-    "Name": "Desk plant lovin",
-    "Amount": 5.0,
+    "Date": "2222-12-22T22:22:22",
+    "Name": "jej",
+    "Amount": 22.0,
     "Type": 0
   },
   {
@@ -39,6 +39,13 @@
     "Date": "2000-09-11T05:05:05",
     "Name": "plane",
     "Amount": 911.0,
+    "Type": 0
+  },
+  {
+    "Id": "fac6aca0-c766-42c4-910e-c5c23141c2f7",
+    "Date": "2222-12-22T22:22:22",
+    "Name": "asd",
+    "Amount": 123.0,
     "Type": 0
   }
 ]
