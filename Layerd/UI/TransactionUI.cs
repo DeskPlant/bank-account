@@ -26,11 +26,13 @@ namespace Layerd.UI
             Console.WriteLine("5. Filter the transaction by date.");
             Console.WriteLine("6. Filter the transactions between 2 dates.");
             Console.WriteLine("7. Update existing transaction through ID.");
+            Console.WriteLine();
         }
 
         public int ReadCommand()
         {
             string str = Console.ReadLine();
+            Console.WriteLine("");
 
             return int.TryParse(str, out int command) ? command : -1;
         }
@@ -200,26 +202,57 @@ namespace Layerd.UI
            
             Console.WriteLine("Type the ID of the transaction you want to modify");
             string id = Console.ReadLine();
-            
             Guid idSearch = Guid.Parse(id);
-
             Console.WriteLine(idSearch);
 
-            
-            
+            Console.WriteLine("Enter the new Values for your Updated Transaction");
+            Console.WriteLine();
+                
 
-            Transaction transaction;
+            DateTime newDateTime;
+            bool succeded;
+            do
+            {
+                string format = "yyyy/MM/dd HH:mm:ss";
+                Console.WriteLine($"Give the New date and time in the following format: {format}");
+                string dateString = Console.ReadLine();
+                succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out newDateTime);
+            }
+            while (!succeded);
 
-            IEnumerable<Transaction> listOfTransactions;
+            Console.WriteLine("Enter the New Name of your transaction");
+            string newName = Console.ReadLine();
 
-            //listOfTransactions = Service.UpdateTransaction(transactionId,transaction);
+            double newAmount;
+            do
+            {
+                Console.WriteLine("Enter the New Value of your transaction");
+                succeded = double.TryParse(Console.ReadLine(), out newAmount);
+            }
+            while (!succeded);
 
-           
+            string newTransactionType;
+            do
+            {
+                Console.WriteLine($"Is your New transaction {TransactionType.Incoming} or {TransactionType.Outgoing}?");
+                newTransactionType = Console.ReadLine();
+            }
+            while (newTransactionType != TransactionType.Outgoing.ToString() && newTransactionType != TransactionType.Incoming.ToString());
+            TransactionType type = (TransactionType)Enum.Parse(typeof(TransactionType), newTransactionType);
+
+            Transaction transaction = new Transaction
+            {
+                Id = idSearch,
+                Date = newDateTime,
+                Name = newName,
+                Amount = newAmount,
+                Type = type
+            };
+
+            Service.UpdateTransaction(transaction);
             
 
         }
-        
-
     }
 }
 
