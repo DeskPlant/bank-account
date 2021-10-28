@@ -283,74 +283,37 @@ namespace Layerd.UI
                 {
                     Console.WriteLine(transaction.Name.ToString());
                 }
+
+                Console.WriteLine("Would you like to delete the Transactions shown. Press y for Yes and n for No");
+                Console.WriteLine("");
+
+                string input = Console.ReadLine();
+                switch (input.ToLower())
+                {
+                    case "y":
+                        {
+                            Service.DeleteTransaction(date);
+                            Console.WriteLine("Transaction Deleted Successfully!");
+                            break;
+                        }
+                    case "n":
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine("Enter new command");
+                            break;
+                        }
+
+                }
+
             }
             else
             {
                 Console.WriteLine("No transactions with such date.");
-            }
-
-            Console.WriteLine("Would you like to delete the Transactions shown. Press y for Yes and n for No");
-            Console.WriteLine("");
-
-
-            string input = Console.ReadLine();
-            switch (input)
-            {
-                case "y":
-                    {
-                        Service.DeleteTransaction(date);
-                        break;
-                    }
-                case "n":
-                    {
-                        break;
-                    }
-
+                Console.WriteLine(""); 
+                Console.WriteLine("Enter new command");
             }
 
         }
-
-        public void DeleteTransaction()
-        {
-            throw new NotImplementedException();
-        }
-
-        // public void DeleteTransaction()
-        // {
-
-        //        DateTime date;
-        //    bool succeded;
-
-        //    do
-        //    {
-        //        string format = "yyyy/MM/dd";
-        //        Console.WriteLine($"Give the date of the transaction you want to delete in the following: {format}");
-        //        string dateString = Console.ReadLine();
-        //        succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-        //    }
-        //    while (!succeded);
-
-        //    IEnumerable<Transaction> listOfFilterByDate = Service.FilterByOneDate(date);
-
-        //    if (listOfFilterByDate.Any())
-        //    {
-        //        foreach (Transaction transaction in listOfFilterByDate)
-        //        {
-        //            Console.WriteLine(transaction.Name.ToString());
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("No transactions with such date.");
-        //    }
-
-        //}
-
-
-
-
-
-
 
     }
 }

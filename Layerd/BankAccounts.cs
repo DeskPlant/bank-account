@@ -77,7 +77,7 @@ namespace Layerd
                         case 8:
                             {
                                 UI.FilterByOneDate();
-                                Console.WriteLine("Transaction Deleted Successfully!");
+                                
                                 break;
                             }
                         default:
