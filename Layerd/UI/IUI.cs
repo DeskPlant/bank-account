@@ -17,5 +17,9 @@
         public void FilterBetweenDates();
 
         public void UpdateTransaction();
+
+        public void DeleteTransaction();
+
+        public void FilterByOneDate();
     }
 }

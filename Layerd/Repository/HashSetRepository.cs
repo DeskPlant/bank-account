@@ -131,5 +131,31 @@ namespace Layerd.Repository
 
             return null;
         }
+
+        public IEnumerable<Transaction> FilterByOneDate(DateTime date)
+        {
+            List<Transaction> listOfFilterByDate = new List<Transaction>();
+            foreach  (Transaction transaction in Transactions)
+            {
+                if (transaction.Date.Date == date.Date)
+                {
+                    listOfFilterByDate.Add(transaction);
+                }
+            }
+                return listOfFilterByDate;
+        }
+
+        public void DeleteTransaction(DateTime date)
+        {
+
+            foreach (Transaction transaction in Transactions.ToArray())
+            {
+                if (transaction.Date.Date == date.Date)
+                {
+                    Transactions.Remove(transaction);
+                    UpdateFile();
+                }
+            }
+        }       
     }
 }

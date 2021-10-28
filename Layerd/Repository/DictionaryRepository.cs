@@ -133,5 +133,27 @@ namespace Layerd.Repository
                 return null;
             }
         }
+
+        public void DeleteTransaction(DateTime date)
+        {
+            int count = 0;
+
+            foreach (Transaction transaction in Transactions.Values.ToArray())
+            {
+                if (transaction.Date.Date == date.Date)
+                {
+                    Transactions.Remove(transaction.Id);
+                    count++;
+                    UpdateFile();
+                }
+            }
+
+            
+        }
+
+        public IEnumerable<Transaction> FilterByOneDate(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

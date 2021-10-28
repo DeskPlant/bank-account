@@ -26,5 +26,9 @@ namespace Layerd.Repository
         public IEnumerable<Transaction> FilterBetweenDates(DateTime first, DateTime second);
 
         public Transaction UpdateTransaction(Transaction transaction);
+
+        public void DeleteTransaction(DateTime date);
+
+        public IEnumerable<Transaction> FilterByOneDate(DateTime date);
     }
 }

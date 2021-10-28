@@ -74,6 +74,12 @@ namespace Layerd
                                 Console.WriteLine();
                                 break;
                             }
+                        case 8:
+                            {
+                                UI.FilterByOneDate();
+                                Console.WriteLine("Transaction Deleted Successfully!");
+                                break;
+                            }
                         default:
                             {
                                 Console.WriteLine("No such command.");
