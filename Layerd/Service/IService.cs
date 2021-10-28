@@ -6,7 +6,9 @@ namespace Layerd.Service
 {
     public interface IService
     {
-        public void AddTransaction(Transaction transaction);
+        public void UpdateFile();
+
+        public Transaction AddTransaction(Transaction transaction);
 
         public IEnumerable<Transaction> GetAllTransactions();
 

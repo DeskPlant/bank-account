@@ -28,6 +28,7 @@ namespace Layerd
                         case 0:
                             {
                                 Running = false;
+                                UI.UpdateFile();
                                 break;
                             }
                         case 1:
@@ -39,7 +40,6 @@ namespace Layerd
                         case 2:
                             {
                                 UI.AddTransaction();
-                                Console.WriteLine("Transaction added successfully!");
                                 Console.WriteLine();
                                 break;
                             }
@@ -70,7 +70,6 @@ namespace Layerd
                         case 7:
                             {
                                 UI.UpdateTransaction();
-                                Console.WriteLine("Transaction Updated Successfully!");
                                 Console.WriteLine();
                                 break;
                             }

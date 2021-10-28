@@ -2,6 +2,8 @@
 {
     public interface IUI
     {
+        public void UpdateFile();
+
         public void DisplayMenu();
 
         public int ReadCommand();

@@ -19,5 +19,12 @@
     "Name": "yes",
     "Amount": 95.0,
     "Type": 0
+  },
+  {
+    "Id": "fac6aca0-c766-42c4-910e-c5c23141c2f7",
+    "Date": "2222-12-22T22:22:22",
+    "Name": "asd",
+    "Amount": 123.0,
+    "Type" : 0
   }
 ]

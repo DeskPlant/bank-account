@@ -11,6 +11,11 @@ namespace Layerd.UI
     {
         private readonly IService Service;
 
+        public void UpdateFile()
+        {
+            Service.UpdateFile();
+        }
+
         public TransactionUI(IService service)
         {
             Service = service;
@@ -81,7 +86,14 @@ namespace Layerd.UI
                 Type = type
             };
 
-            Service.AddTransaction(transaction);
+            if (null == Service.AddTransaction(transaction))
+            {
+                Console.WriteLine("Failed adding transaction.");
+            }
+            else
+            {
+                Console.WriteLine("Transaction added succesfully.");
+            }
         }
 
         public void DisplayAllTransactions()
@@ -312,7 +324,6 @@ namespace Layerd.UI
                 Console.WriteLine(""); 
                 Console.WriteLine("Enter new command");
             }
-
         }
 
     }
