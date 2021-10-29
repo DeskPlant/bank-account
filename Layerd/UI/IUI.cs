@@ -20,6 +20,10 @@
 
         public void UpdateTransaction();
 
-        public void FilterByOneDate();
+        public void DeleteThroughDate();
+
+        public void DeleteTransactionsBetweenDates();
+
+
     }
 }

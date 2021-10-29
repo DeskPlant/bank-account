@@ -20,9 +20,13 @@ namespace Layerd.Service
 
         public Transaction UpdateTransaction(Transaction transaction);
 
-        public void DeleteTransaction(DateTime date);
+        public void DeleteTransactions(DateTime date);
 
         public IEnumerable<Transaction> FilterByOneDate(DateTime date);
+
+        public void DeleteTransactionId(Guid id);
+
+        public void DeleteTransactionById(IEnumerable<Guid> ids);
     }
 
 }

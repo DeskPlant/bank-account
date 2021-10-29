@@ -75,8 +75,13 @@ namespace Layerd
                             }
                         case 8:
                             {
-                                UI.FilterByOneDate();
+                                UI.DeleteThroughDate();
                                 
+                                break;
+                            }
+                        case 9:
+                            {
+                                UI.DeleteTransactionsBetweenDates();
                                 break;
                             }
                         default:
@@ -90,6 +95,7 @@ namespace Layerd
                 catch (Exception exception)
                 {
                     Console.WriteLine($"Exception caught: {exception.Message}");
+                    Console.WriteLine(exception.StackTrace);
                 }
             }
         }

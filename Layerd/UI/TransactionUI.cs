@@ -31,7 +31,8 @@ namespace Layerd.UI
             Console.WriteLine("5. Filter the transaction by date.");
             Console.WriteLine("6. Filter the transactions between 2 dates.");
             Console.WriteLine("7. Update existing transaction through ID.");
-            Console.WriteLine("8. Delete transaction though a given day.");
+            Console.WriteLine("8. Delete transaction though a given date.");
+            Console.WriteLine("9. Delete transaction though a given interval of dates.");
             Console.WriteLine();
         }
 
@@ -124,32 +125,28 @@ namespace Layerd.UI
             }
         }
 
-        public void FilterBetweenDates()
+        private DateTime ReadDate(string format = "yyyy/MM/dd HH:mm:ss")
         {
-
             DateTime dateTime;
-            DateTime secondDateTime;
-
-            IEnumerable<Transaction> listOfTransactions;
-
             bool succeded;
             do
             {
-                string format = "yyyy/MM/dd HH:mm:ss";
                 Console.WriteLine($"Give the first date and time in the following format: {format}");
                 string dateString = Console.ReadLine();
                 succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
             }
             while (!succeded);
 
-            do
-            {
-                string format = "yyyy/MM/dd HH:mm:ss";
-                Console.WriteLine($"Give the second date and time in the following format: {format}");
-                string dateString = Console.ReadLine();
-                succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out secondDateTime);
-            }
-            while (!succeded);
+            return dateTime;
+        }
+
+        public void FilterBetweenDates()
+        {
+
+            DateTime dateTime = ReadDate();
+            DateTime secondDateTime = ReadDate();
+
+            IEnumerable<Transaction> listOfTransactions;
 
             listOfTransactions = Service.FilterBetweenDates(dateTime, secondDateTime);
 
@@ -272,7 +269,7 @@ namespace Layerd.UI
 
         }
 
-        public void FilterByOneDate()
+        public void DeleteThroughDate()
         {
 
             DateTime date;
@@ -304,7 +301,7 @@ namespace Layerd.UI
                 {
                     case "y":
                         {
-                            Service.DeleteTransaction(date);
+                            Service.DeleteTransactions(date);
                             Console.WriteLine("Transaction Deleted Successfully!");
                             break;
                         }
@@ -314,15 +311,70 @@ namespace Layerd.UI
                             Console.WriteLine("Enter new command");
                             break;
                         }
+                    default:
+                        {
+                            Console.WriteLine("Wrong command");
+                            break;
+                        }
 
                 }
-
             }
             else
             {
                 Console.WriteLine("No transactions with such date.");
-                Console.WriteLine(""); 
-                Console.WriteLine("Enter new command");
+                Console.WriteLine("");
+            }
+        }
+
+        public void DeleteTransactionsBetweenDates()
+        {
+
+            DateTime dateTime = ReadDate();
+            DateTime secondDateTime = ReadDate();
+
+            IEnumerable<Transaction> listOfTransactions;
+
+            listOfTransactions = Service.FilterBetweenDates(dateTime, secondDateTime);
+
+
+            if (listOfTransactions.Any())
+            {
+                Console.WriteLine($"Found {listOfTransactions.Count()} transactions:");
+                foreach (Transaction transaction in listOfTransactions)
+                {
+                    Console.WriteLine(transaction);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No such transaction betweem those dates.");
+            }
+
+            Console.WriteLine("Would you like to delete the Transactions shown. Press y for Yes and n for No");
+            Console.WriteLine("");
+
+
+            string input = Console.ReadLine();
+            switch (input.ToLower())
+            {
+                case "y":
+                    {
+                        Service.DeleteTransactionById(listOfTransactions.Select(t => t.Id));
+                        Console.WriteLine("Transaction Deleted Successfully!");
+                        break;
+                    }
+                case "n":
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("Enter new command");
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("Wrong command");
+                        break;
+                    }
+
             }
         }
 

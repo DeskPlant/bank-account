@@ -30,5 +30,9 @@ namespace Layerd.Repository
         public void DeleteTransaction(DateTime date);
 
         public IEnumerable<Transaction> FilterByOneDate(DateTime date);
+
+        public void DeleteTransactionById(Guid id);
+
+        public void DeleteTransactionById(IEnumerable<Guid> ids);
     }
 }

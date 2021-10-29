@@ -163,6 +163,31 @@ namespace Layerd.Repository
                     UpdateFile();
                 }
             }
-        }       
+        } 
+        
+        public void DeleteTransactionById(Guid id)
+        {
+            foreach (Transaction transaction in Transactions.ToArray())
+            {
+                if(transaction.Id == id)
+                {
+                    Transactions.Remove(transaction);
+                    UpdateFile();
+                }
+            }
+        }
+
+        public void DeleteTransactionById(IEnumerable<Guid> ids)
+        {
+            foreach (Transaction transaction in Transactions.ToArray())
+            {
+                if (ids.Contains(transaction.Id))
+                {
+                    Transactions.Remove(transaction);
+                    UpdateFile();
+                }
+            }
+        }
     }
+
 }

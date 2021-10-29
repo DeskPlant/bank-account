@@ -51,7 +51,7 @@ namespace Layerd.Service
             return Repository.UpdateTransaction(transaction);
         }
 
-        public void DeleteTransaction(DateTime date)
+        public void DeleteTransactions(DateTime date)
         {
             Repository.DeleteTransaction(date);
         }
@@ -59,6 +59,16 @@ namespace Layerd.Service
         public IEnumerable<Transaction> FilterByOneDate(DateTime date)
         {
             return Repository.FilterByOneDate(date);
+        }
+
+        public void DeleteTransactionId(Guid id)
+        {
+            Repository.DeleteTransactionById(id);
+        }
+
+        public void DeleteTransactionById(IEnumerable<Guid> ids)
+        {
+            Repository.DeleteTransactionById(ids);
         }
     }
 }

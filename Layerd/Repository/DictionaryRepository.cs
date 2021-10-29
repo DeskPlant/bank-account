@@ -156,5 +156,15 @@ namespace Layerd.Repository
         {
             throw new NotImplementedException();
         }
+
+        public void DeleteTransactionById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteTransactionById(IEnumerable<Guid> ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
