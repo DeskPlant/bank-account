@@ -53,7 +53,7 @@ namespace Layerd.Service
 
         public void DeleteTransactions(DateTime date)
         {
-            Repository.DeleteTransaction(date);
+            Repository.DeleteTransactionsByDate(date);
         }
 
         public IEnumerable<Transaction> FilterByOneDate(DateTime date)

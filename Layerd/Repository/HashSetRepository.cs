@@ -16,10 +16,11 @@ namespace Layerd.Repository
     {
         public readonly string SourceFile = @"..\..\..\transactions.json";
 
-        private HashSet<Transaction> Transactions { get; set; } = new HashSet<Transaction>();
+        private HashSet<Transaction> Transactions { get; } = new HashSet<Transaction>();
 
-        public HashSetRepository()
+        public HashSetRepository(string sourceFile = @"..\..\..\transactions.json")
         {
+            SourceFile = sourceFile;
             ReadAllFromFile();
         }
 
@@ -58,7 +59,12 @@ namespace Layerd.Repository
             //transforms a string into Transactions
             try
             {
-                Transactions = JsonConvert.DeserializeObject<HashSet<Transaction>>(jsonString);
+                WipeRepository();
+                foreach (Transaction transaction in JsonConvert.DeserializeObject<HashSet<Transaction>>(jsonString))
+                {
+                    Transactions.Add(transaction);
+                }
+
             }
             catch (Exception)
             {
@@ -102,13 +108,13 @@ namespace Layerd.Repository
             return listOfFilteredTransactions;
         }
 
-        public IEnumerable<Transaction> FilterBetweenDates(DateTime first, DateTime second)
+        public IEnumerable<Transaction> FilterBetweenDates(DateTime start, DateTime end)
         {
             List<Transaction> listOfTransactionsBetween = new List<Transaction>();
 
             foreach (Transaction transaction in Transactions)
             {
-                if (transaction.Date > first && transaction.Date < second)
+                if (transaction.Date > start && transaction.Date < end)
                 {
                     listOfTransactionsBetween.Add(transaction);
                 }
@@ -142,19 +148,18 @@ namespace Layerd.Repository
         public IEnumerable<Transaction> FilterByOneDate(DateTime date)
         {
             List<Transaction> listOfFilterByDate = new List<Transaction>();
-            foreach  (Transaction transaction in Transactions)
+            foreach (Transaction transaction in Transactions)
             {
                 if (transaction.Date.Date == date.Date)
                 {
                     listOfFilterByDate.Add(transaction);
                 }
             }
-                return listOfFilterByDate;
+            return listOfFilterByDate;
         }
 
-        public void DeleteTransaction(DateTime date)
+        public void DeleteTransactionsByDate(DateTime date)
         {
-
             foreach (Transaction transaction in Transactions.ToArray())
             {
                 if (transaction.Date.Date == date.Date)
@@ -188,6 +193,15 @@ namespace Layerd.Repository
                 }
             }
         }
-    }
+        public void WipeRepository()
+        {
+            Transactions.Clear();
+            UpdateFile();
+        }
 
+        public Transaction GetTransactionById(Guid id)
+        {
+            return Transactions.FirstOrDefault(transaction => transaction.Id == id);
+        }
+    ]
 }

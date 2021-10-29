@@ -11,8 +11,12 @@ namespace Layerd.Repository
     //delete    delete some stuff from file
     public interface IRepository
     {
+        public void WipeRepository();
+
         public Transaction AddTransaction(Transaction transaction);
 
+        public Transaction GetTransactionById(Guid id);
+        
         public IEnumerable<Transaction> GetAllTransactions();
 
         public void UpdateFile();
@@ -27,7 +31,7 @@ namespace Layerd.Repository
 
         public Transaction UpdateTransaction(Transaction transaction);
 
-        public void DeleteTransaction(DateTime date);
+        public void DeleteTransactionsByDate(DateTime date);
 
         public IEnumerable<Transaction> FilterByOneDate(DateTime date);
 

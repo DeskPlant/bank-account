@@ -1,0 +1,15 @@
+1. adding new transaction
+2. updating a transaction
+	-given an id of an existing transaction and date, sum, type
+3. delete transaction
+	-delete all from a given day
+	-delete all from an interval
+	-delete all transactions of a type
+4. searches
+	-display all transactions larger and a given amount
+	-display all transactions before a given day and bigger than a given amount
+	-display all transactions of a type
+5. raports
+	-display the sum of all transaction amounts of a type
+	-account ballance at a given time (incoming $ - outgoing $)
+	-display all transactions of a type ordered by sum
