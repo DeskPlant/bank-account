@@ -11,10 +11,11 @@ namespace Layerd.Repository
     {
         public readonly string SourceFile = @"..\..\..\transactions.json";
 
-        private Dictionary<Guid, Transaction> Transactions { get; set; } = new Dictionary<Guid, Transaction>();
+        private Dictionary<Guid, Transaction> Transactions { get; } = new Dictionary<Guid, Transaction>();
 
-        public DictionaryRepository()
+        public DictionaryRepository(string sourceFile = @"..\..\..\transactions.json")
         {
+            SourceFile = sourceFile;
             ReadAllFromFile();
         }
 
@@ -91,7 +92,7 @@ namespace Layerd.Repository
             try
             {
                 HashSet<Transaction> transactions = JsonConvert.DeserializeObject<HashSet<Transaction>>(jsonString);
-                Transactions = new Dictionary<Guid, Transaction>();
+                WipeRepository();
                 foreach (Transaction transaction in transactions)
                 {
                     Transactions.Add(transaction.Id, transaction);
@@ -135,7 +136,7 @@ namespace Layerd.Repository
             }
         }
 
-        public void DeleteTransaction(DateTime date)
+        public void DeleteTransactionsByDate(DateTime date)
         {
             int count = 0;
 
@@ -149,12 +150,23 @@ namespace Layerd.Repository
                 }
             }
 
-            
+
         }
 
         public IEnumerable<Transaction> FilterByOneDate(DateTime date)
         {
             throw new NotImplementedException();
+        }
+
+        public void WipeRepository()
+        {
+            Transactions.Clear();
+            UpdateFile();
+        }
+
+        public Transaction GetTransactionById(Guid id)
+        {
+            return Transactions[id];
         }
     }
 }
