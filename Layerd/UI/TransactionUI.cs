@@ -351,11 +351,10 @@ namespace Layerd.UI
 
             }
 
+        } 
 
-        }
         public void DeleteTransactionType()
         {
-
             TransactionType type;
 
             bool succeded;
@@ -366,9 +365,6 @@ namespace Layerd.UI
                 succeded = Enum.TryParse(thetype, out type);
             }
             while (!succeded);
-
-
-
 
             Console.WriteLine("Would you like to delete, y for yes and n for no");
             string input = Console.ReadLine();
