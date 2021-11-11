@@ -11,7 +11,7 @@ namespace Tests
     {
         private DictionaryRepository hashSetRepository = null;
 
-        private List<Transaction> GetTransactions()
+        private static List<Transaction> GetTransactions()
         {
             return new()
             {
