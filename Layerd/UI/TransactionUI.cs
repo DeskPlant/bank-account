@@ -33,6 +33,7 @@ namespace Layerd.UI
             Console.WriteLine("7. Update existing transaction through ID.");
             Console.WriteLine("8. Delete transaction though a given date.");
             Console.WriteLine("9. Delete transaction though a given interval of dates.");
+            Console.WriteLine("10. Delete transaction though a given type.");
             Console.WriteLine();
         }
 
@@ -177,20 +178,11 @@ namespace Layerd.UI
             while (filterType != FilterType.AfterDate.ToString() && filterType != FilterType.BeforeDate.ToString());
             FilterType type = (FilterType)Enum.Parse(typeof(FilterType), filterType);
 
-            DateTime dateTime;
-            bool succeded;
-            do
-            {
-                string format = "yyyy/MM/dd HH:mm:ss";
-                Console.WriteLine($"Give a date and time in the following format: {format}");
-                string dateString = Console.ReadLine();
-                succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
-            }
-            while (!succeded);
+            DateTime dateTime = ReadDate();
+            
             IEnumerable<Transaction> listOfTransactions;
 
             listOfTransactions = Service.FilterWithDate(type, dateTime);
-
 
 
             if (listOfTransactions.Any())
@@ -226,15 +218,8 @@ namespace Layerd.UI
             Console.WriteLine();
 
 
-            DateTime newDateTime;
-            do
-            {
-                string format = "yyyy/MM/dd HH:mm:ss";
-                Console.WriteLine($"Give the New date and time in the following format: {format}");
-                string dateString = Console.ReadLine();
-                succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out newDateTime);
-            }
-            while (!succeded);
+            DateTime newDateTime = ReadDate();
+            
 
             Console.WriteLine("Enter the New Name of your transaction");
             string newName = Console.ReadLine();
@@ -271,19 +256,8 @@ namespace Layerd.UI
 
         public void DeleteThroughDate()
         {
-
-            DateTime date;
-            bool succeded;
-
-            do
-            {
-                string format = "yyyy/MM/dd";
-                Console.WriteLine($"Give the date of the transaction you want to delete in the following: {format}");
-                string dateString = Console.ReadLine();
-                succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-            }
-            while (!succeded);
-
+            DateTime date = ReadDate();
+            
             IEnumerable<Transaction> listOfFilterByDate = Service.FilterByOneDate(date);
 
             if (listOfFilterByDate.Any())
@@ -376,6 +350,50 @@ namespace Layerd.UI
                     }
 
             }
+
+
+        }
+        public void DeleteTransactionType()
+        {
+
+            TransactionType type;
+
+            bool succeded;
+            do
+            {
+                Console.WriteLine("Enter the Type of Transaction you would like to delete");
+                string thetype = Console.ReadLine();
+                succeded = Enum.TryParse(thetype, out type);
+            }
+            while (!succeded);
+
+
+
+
+            Console.WriteLine("Would you like to delete, y for yes and n for no");
+            string input = Console.ReadLine();
+            switch (input.ToLower())
+            {
+                case "y":
+                    {
+                        Service.DeleteAllByType(type);
+                        Console.WriteLine("Transaction Deleted Successfully!");
+                        break;
+                    }
+                case "n":
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("Enter new command");
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("Wrong command");
+                        break;
+                    }
+
+            }   
+
         }
 
     }

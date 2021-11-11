@@ -24,6 +24,6 @@
 
         public void DeleteTransactionsBetweenDates();
 
-
+        public void DeleteTransactionType();
     }
 }

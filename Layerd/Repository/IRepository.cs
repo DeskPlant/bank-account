@@ -11,7 +11,7 @@ namespace Layerd.Repository
     //delete    delete some stuff from file
     public interface IRepository
     {
-        public void WipeRepository();
+        public void WipeRepository(bool updateFile);
 
         public Transaction AddTransaction(Transaction transaction);
 
@@ -38,5 +38,7 @@ namespace Layerd.Repository
         public void DeleteTransactionById(Guid id);
 
         public void DeleteTransactionById(IEnumerable<Guid> ids);
+
+        public void DeleteAllByType(TransactionType type);
     }
 }

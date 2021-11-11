@@ -59,12 +59,11 @@ namespace Layerd.Repository
             //transforms a string into Transactions
             try
             {
-                WipeRepository();
+                WipeRepository(false);
                 foreach (Transaction transaction in JsonConvert.DeserializeObject<HashSet<Transaction>>(jsonString))
                 {
                     Transactions.Add(transaction);
                 }
-
             }
             catch (Exception)
             {
@@ -168,13 +167,13 @@ namespace Layerd.Repository
                     UpdateFile();
                 }
             }
-        } 
-        
+        }
+
         public void DeleteTransactionById(Guid id)
         {
             foreach (Transaction transaction in Transactions.ToArray())
             {
-                if(transaction.Id == id)
+                if (transaction.Id == id)
                 {
                     Transactions.Remove(transaction);
                     UpdateFile();
@@ -193,15 +192,43 @@ namespace Layerd.Repository
                 }
             }
         }
-        public void WipeRepository()
+
+
+        /// <summary>
+        ///  clears repository of all entities
+        /// </summary>
+        /// <param name="updateFile"> updateFile - true to change local file, false to not change it</param>
+
+        public void WipeRepository(bool updateFile = true)
         {
             Transactions.Clear();
-            UpdateFile();
+            if(updateFile)
+            {
+               UpdateFile();
+            }
         }
 
         public Transaction GetTransactionById(Guid id)
         {
             return Transactions.FirstOrDefault(transaction => transaction.Id == id);
+        } 
+
+        public void DeleteAllByType(TransactionType type)
+        {
+            foreach (Transaction transaction in Transactions.ToArray())
+            {
+                if(transaction.Type == type)
+                {
+                    Transactions.Remove(transaction);
+                    UpdateFile();
+                }
+            }
         }
-    ]
+
+        public void FilterTransactionValues()
+        {
+
+        }
+
+    }
 }

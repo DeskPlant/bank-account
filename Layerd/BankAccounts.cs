@@ -84,6 +84,11 @@ namespace Layerd
                                 UI.DeleteTransactionsBetweenDates();
                                 break;
                             }
+                        case 10:
+                            {
+                                UI.DeleteTransactionType();
+                                break;
+                            }
                         default:
                             {
                                 Console.WriteLine("No such command.");

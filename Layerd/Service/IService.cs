@@ -27,6 +27,8 @@ namespace Layerd.Service
         public void DeleteTransactionId(Guid id);
 
         public void DeleteTransactionById(IEnumerable<Guid> ids);
+
+        public void DeleteAllByType(TransactionType type);
     }
 
 }

@@ -158,10 +158,13 @@ namespace Layerd.Repository
             throw new NotImplementedException();
         }
 
-        public void WipeRepository()
+        public void WipeRepository(bool updateFile = true)
         {
             Transactions.Clear();
-            UpdateFile();
+            if (updateFile)
+            {
+                UpdateFile();
+            }
         }
 
         public Transaction GetTransactionById(Guid id)
@@ -175,6 +178,11 @@ namespace Layerd.Repository
         }
 
         public void DeleteTransactionById(IEnumerable<Guid> ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAllByType(TransactionType type)
         {
             throw new NotImplementedException();
         }

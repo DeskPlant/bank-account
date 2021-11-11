@@ -70,5 +70,10 @@ namespace Layerd.Service
         {
             Repository.DeleteTransactionById(ids);
         }
+
+        public void DeleteAllByType(TransactionType type)
+        {
+            Repository.DeleteAllByType(type);
+        }
     }
 }
