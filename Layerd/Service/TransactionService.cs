@@ -75,5 +75,20 @@ namespace Layerd.Service
         {
             Repository.DeleteAllByType(type);
         }
+
+        public IEnumerable<Transaction> FilterTransactionValues(double cValue)
+        {
+            return Repository.FilterTransactionValues(cValue);
+        }
+
+        public IEnumerable<Transaction> FilterTransactionValueAndDate(DateTime dateTime, double amount)
+        {
+            return Repository.FilterTransactionValueAndDate(dateTime, amount);
+        }
+
+        public IEnumerable<Transaction> FilterTransactionTypes(TransactionType type)
+        {
+            return Repository.FilterTransactionTypes(type);
+        }
     }
 }

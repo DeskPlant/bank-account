@@ -25,5 +25,11 @@
         public void DeleteTransactionsBetweenDates();
 
         public void DeleteTransactionType();
+
+        public void FilterTransactionValues();
+
+        public void FilterTransactionValueAndDate();
+
+        public void FilterTransactionTypes();
     }
 }

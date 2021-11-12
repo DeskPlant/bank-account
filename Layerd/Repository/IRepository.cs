@@ -40,5 +40,11 @@ namespace Layerd.Repository
         public void DeleteTransactionById(IEnumerable<Guid> ids);
 
         public void DeleteAllByType(TransactionType type);
+
+        public IEnumerable<Transaction> FilterTransactionValues(double cValue);
+
+        public IEnumerable<Transaction> FilterTransactionValueAndDate(DateTime dateTime, double amount);
+
+        public IEnumerable<Transaction> FilterTransactionTypes(TransactionType type);
     }
 }

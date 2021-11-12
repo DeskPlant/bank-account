@@ -8,6 +8,7 @@ using System.Linq;
 namespace Layerd.Repository
 {
     public class DictionaryRepository : IRepository
+       
     {
         public readonly string SourceFile = @"..\..\..\transactions.json";
 
@@ -35,7 +36,7 @@ namespace Layerd.Repository
 
         public IEnumerable<Transaction> FilterBetweenDates(DateTime first, DateTime second)
         {
-            List<Transaction> listOfTransactionsBetween = new List<Transaction>();
+            List<Transaction> listOfTransactionsBetween = new();
 
             foreach (Transaction transaction in Transactions.Values)
             {
@@ -50,7 +51,7 @@ namespace Layerd.Repository
 
         public IEnumerable<Transaction> FilterByName(string transactionName)
         {
-            List<Transaction> listOfFilteredTransactions = new List<Transaction>();
+            List<Transaction> listOfFilteredTransactions = new();
 
             foreach (Transaction transaction in Transactions.Values)
             {
@@ -65,7 +66,7 @@ namespace Layerd.Repository
 
         public IEnumerable<Transaction> FilterWithDate(FilterType type, DateTime dateTime)
         {
-            List<Transaction> listOfFilteredTransactions = new List<Transaction>();
+            List<Transaction> listOfFilteredTransactions = new();
 
             foreach (Transaction transaction in Transactions.Values)
             {
@@ -85,7 +86,7 @@ namespace Layerd.Repository
 
         public void ReadAllFromFile()
         {
-            StreamReader streamReader = new StreamReader(SourceFile);
+            StreamReader streamReader = new(SourceFile);
             string jsonString = streamReader.ReadToEnd();
 
             //transforms a string into Transactions
@@ -115,7 +116,7 @@ namespace Layerd.Repository
             //transforms Transactions into a string
             string jsonString = JsonConvert.SerializeObject(Transactions.Values, Formatting.Indented);
 
-            StreamWriter streamWriter = new StreamWriter(SourceFile);
+            StreamWriter streamWriter = new(SourceFile);
             streamWriter.Write(jsonString);
             streamWriter.Close();
         }
@@ -183,6 +184,21 @@ namespace Layerd.Repository
         }
 
         public void DeleteAllByType(TransactionType type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Transaction> FilterTransactionValues(double cValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Transaction> FilterTransactionValueAndDate(DateTime dateTime, double amount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Transaction> FilterTransactionTypes(TransactionType type)
         {
             throw new NotImplementedException();
         }

@@ -46,14 +46,14 @@ namespace Layerd.Repository
         {
             //transforms Transactions into a string
             string jsonString = JsonConvert.SerializeObject(Transactions, Formatting.Indented);
-            StreamWriter streamWriter = new StreamWriter(SourceFile);
+            StreamWriter streamWriter = new(SourceFile);
             streamWriter.Write(jsonString);
             streamWriter.Close();
         }
 
         public void ReadAllFromFile()
         {
-            StreamReader streamReader = new StreamReader(SourceFile);
+            StreamReader streamReader = new(SourceFile);
             string jsonString = streamReader.ReadToEnd();
 
             //transforms a string into Transactions
@@ -79,11 +79,11 @@ namespace Layerd.Repository
 
         public IEnumerable<Transaction> FilterByName(string transactionName)
         {
-            List<Transaction> listOfFilteredTransactions = new List<Transaction>();
+            List<Transaction> listOfFilteredTransactions = new();
 
             foreach (Transaction transaction in Transactions)
             {
-                if (transaction.Name == transactionName)
+                if (transaction.Name.ToLower() == transactionName.ToLower())
                 {
                     listOfFilteredTransactions.Add(transaction);
                 }
@@ -94,7 +94,7 @@ namespace Layerd.Repository
 
         public IEnumerable<Transaction> FilterWithDate(FilterType type, DateTime dateTime)
         {
-            List<Transaction> listOfFilteredTransactions = new List<Transaction>();
+            List<Transaction> listOfFilteredTransactions = new();
 
             foreach (Transaction transaction in Transactions)
             {
@@ -109,7 +109,7 @@ namespace Layerd.Repository
 
         public IEnumerable<Transaction> FilterBetweenDates(DateTime start, DateTime end)
         {
-            List<Transaction> listOfTransactionsBetween = new List<Transaction>();
+            List<Transaction> listOfTransactionsBetween = new();
 
             foreach (Transaction transaction in Transactions)
             {
@@ -146,7 +146,7 @@ namespace Layerd.Repository
 
         public IEnumerable<Transaction> FilterByOneDate(DateTime date)
         {
-            List<Transaction> listOfFilterByDate = new List<Transaction>();
+            List<Transaction> listOfFilterByDate = new();
             foreach (Transaction transaction in Transactions)
             {
                 if (transaction.Date.Date == date.Date)
@@ -225,9 +225,47 @@ namespace Layerd.Repository
             }
         }
 
-        public void FilterTransactionValues()
+        public IEnumerable<Transaction> FilterTransactionValues(double cValue)
         {
+            List<Transaction> listOfTransactionsBigger = new();
 
+            foreach (Transaction transaction in Transactions)
+            {
+                if(cValue < transaction.Amount)
+                {
+                    listOfTransactionsBigger.Add(transaction);
+                }
+            }
+
+            return listOfTransactionsBigger;
+        }
+
+        public IEnumerable<Transaction> FilterTransactionValueAndDate(DateTime dateTime, double amount)
+        {
+            List<Transaction> listOfTransactionsBiggerAndDate = new();
+
+            foreach (Transaction transaction in Transactions)
+            {
+                if(amount < transaction.Amount && dateTime > transaction.Date)
+                {
+                    listOfTransactionsBiggerAndDate.Add(transaction);
+                }
+            }
+
+            return listOfTransactionsBiggerAndDate;
+        }
+
+        public IEnumerable<Transaction> FilterTransactionTypes(TransactionType type)
+        {
+            List<Transaction> listOfTransactionType = new();
+
+            foreach (Transaction transaction in Transactions)
+            {
+                if (transaction.Type == type)
+                    listOfTransactionType.Add(transaction);
+            }
+
+            return listOfTransactionType;
         }
 
     }

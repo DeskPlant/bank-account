@@ -34,6 +34,9 @@ namespace Layerd.UI
             Console.WriteLine("8. Delete transaction though a given date.");
             Console.WriteLine("9. Delete transaction though a given interval of dates.");
             Console.WriteLine("10. Delete transaction though a given type.");
+            Console.WriteLine("11. Show the Transactions bigger than a given amount.");
+            Console.WriteLine("12. Show the Transactions bigger than a given amount and before a given date");
+            Console.WriteLine("13. Filter the transactions by Type.");
             Console.WriteLine();
         }
 
@@ -45,24 +48,40 @@ namespace Layerd.UI
             return int.TryParse(str, out int command) ? command : -1;
         }
 
+        static Guid ReadGuid()
+        {
+            bool succeded;
+            Guid id;
+            do
+            {
+                string format = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
+                Console.WriteLine($"Give the ID of the Transaction you want to update in the following format: {format}");
 
-        //add transaction (date, name, sum, type)
-        public void AddTransaction()
+                succeded = Guid.TryParse(Console.ReadLine(), out id);
+            }
+            while (!succeded);
+
+            return id;
+        }
+
+        static DateTime ReadDate(string format = "yyyy/MM/dd HH:mm:ss")
         {
             DateTime dateTime;
             bool succeded;
             do
             {
-                string format = "yyyy/MM/dd HH:mm:ss";
-                Console.WriteLine($"Give a date and time in the following format: {format}");
+                Console.WriteLine($"Give the date and time in the following format: {format}");
                 string dateString = Console.ReadLine();
                 succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
             }
             while (!succeded);
 
-            Console.WriteLine("Enter the Name of your transaction");
-            string name = Console.ReadLine();
+            return dateTime;
+        }
 
+        static double ReadAmount()
+        {
+            bool succeded;
             double amount;
             do
             {
@@ -71,21 +90,52 @@ namespace Layerd.UI
             }
             while (!succeded);
 
+            return amount;
+        }
+
+        static string ReadString(string hint)
+        {
+            Console.WriteLine(hint);
+            string name = Console.ReadLine();
+            return name;
+        }
+
+        public static T ReadEnum<T>() // T is a generic type class
+        {
             string transactionType;
+
+            string[] list = System.Enum.GetNames(typeof(T)); // gets the names of all the the Transaction types (inc and outgo)
+
+            string enumNames = string.Join(" or ", list);
+
             do
             {
-                Console.WriteLine($"Is your transaction {TransactionType.Incoming} or {TransactionType.Outgoing}?");
+                Console.WriteLine($"Is your {typeof(T).Name} {enumNames}?"); // basically using {} instead of +
                 transactionType = Console.ReadLine();
             }
-            while (transactionType != TransactionType.Outgoing.ToString() && transactionType != TransactionType.Incoming.ToString());
-            TransactionType type = (TransactionType)Enum.Parse(typeof(TransactionType), transactionType);
+            while (!list.Contains(transactionType));
 
-            Transaction transaction = new Transaction
+            return (T)Enum.Parse(typeof(T), transactionType);
+
+        }
+
+        //add transaction (date, name, sum, type)
+        public void AddTransaction()
+        {
+            DateTime dateTime = ReadDate();
+
+            string name = ReadString("Enter the name of your transaction");
+
+            double amount = ReadAmount();
+
+            TransactionType transactionType = ReadEnum<TransactionType>();
+
+            Transaction transaction = new()
             {
                 Date = dateTime,
                 Name = name,
                 Amount = amount,
-                Type = type
+                Type = transactionType
             };
 
             if (null == Service.AddTransaction(transaction))
@@ -108,8 +158,7 @@ namespace Layerd.UI
 
         public void FilterByName()
         {
-            Console.WriteLine("Transaction name");
-            string transactionName = Console.ReadLine();
+            string transactionName = ReadString("Enter the name you want to search");
 
             IEnumerable<Transaction> listOfTransactions = Service.FilterByName(transactionName);
 
@@ -126,21 +175,6 @@ namespace Layerd.UI
             }
         }
 
-        private DateTime ReadDate(string format = "yyyy/MM/dd HH:mm:ss")
-        {
-            DateTime dateTime;
-            bool succeded;
-            do
-            {
-                Console.WriteLine($"Give the first date and time in the following format: {format}");
-                string dateString = Console.ReadLine();
-                succeded = DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
-            }
-            while (!succeded);
-
-            return dateTime;
-        }
-
         public void FilterBetweenDates()
         {
 
@@ -150,7 +184,6 @@ namespace Layerd.UI
             IEnumerable<Transaction> listOfTransactions;
 
             listOfTransactions = Service.FilterBetweenDates(dateTime, secondDateTime);
-
 
             if (listOfTransactions.Any())
             {
@@ -166,7 +199,6 @@ namespace Layerd.UI
             }
         }
 
-
         public void FilterByDate()
         {
             string filterType;
@@ -179,7 +211,7 @@ namespace Layerd.UI
             FilterType type = (FilterType)Enum.Parse(typeof(FilterType), filterType);
 
             DateTime dateTime = ReadDate();
-            
+
             IEnumerable<Transaction> listOfTransactions;
 
             listOfTransactions = Service.FilterWithDate(type, dateTime);
@@ -202,48 +234,22 @@ namespace Layerd.UI
         public void UpdateTransaction()
         {
 
-            bool succeded;
-            Guid iddate;
-            do
-            {
-                string format = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
-                Console.WriteLine($"Give the ID of the Transaction you want to update in the following format: {format}");
-
-                succeded = Guid.TryParse(Console.ReadLine(), out iddate);
-            }
-            while (!succeded);
-
+            Guid id = ReadGuid();
 
             Console.WriteLine("Enter the new Values for your Updated Transaction");
             Console.WriteLine();
 
-
             DateTime newDateTime = ReadDate();
-            
 
-            Console.WriteLine("Enter the New Name of your transaction");
-            string newName = Console.ReadLine();
+            string newName = ReadString("Enter your Transaction name");
 
-            double newAmount;
-            do
+            double newAmount = ReadAmount();
+
+            TransactionType type = ReadEnum<TransactionType>();
+
+            Transaction transaction = new()
             {
-                Console.WriteLine("Enter the New Value of your transaction");
-                succeded = double.TryParse(Console.ReadLine(), out newAmount);
-            }
-            while (!succeded);
-
-            string newTransactionType;
-            do
-            {
-                Console.WriteLine($"Is your Updated transaction {TransactionType.Incoming} or {TransactionType.Outgoing}?");
-                newTransactionType = Console.ReadLine();
-            }
-            while (newTransactionType != TransactionType.Outgoing.ToString() && newTransactionType != TransactionType.Incoming.ToString());
-            TransactionType type = (TransactionType)Enum.Parse(typeof(TransactionType), newTransactionType);
-
-            Transaction transaction = new Transaction
-            {
-                Id = iddate,
+                Id = id,
                 Date = newDateTime,
                 Name = newName,
                 Amount = newAmount,
@@ -257,7 +263,7 @@ namespace Layerd.UI
         public void DeleteThroughDate()
         {
             DateTime date = ReadDate();
-            
+
             IEnumerable<Transaction> listOfFilterByDate = Service.FilterByOneDate(date);
 
             if (listOfFilterByDate.Any())
@@ -333,7 +339,7 @@ namespace Layerd.UI
             {
                 case "y":
                     {
-                        Service.DeleteTransactionById(listOfTransactions.Select(t => t.Id));
+                        Service.DeleteTransactionById(listOfTransactions.Select(t => t.Id)); // it selects the id from each transaction
                         Console.WriteLine("Transaction Deleted Successfully!");
                         break;
                     }
@@ -351,28 +357,38 @@ namespace Layerd.UI
 
             }
 
-        } 
+        }
 
         public void DeleteTransactionType()
         {
-            TransactionType type;
+            TransactionType type = ReadEnum<TransactionType>();
 
-            bool succeded;
-            do
+            IEnumerable<Transaction> listOfTransactionsOfTheType;
+
+            listOfTransactionsOfTheType = Service.FilterTransactionTypes(type);
+
+            if(listOfTransactionsOfTheType.Any())
             {
-                Console.WriteLine("Enter the Type of Transaction you would like to delete");
-                string thetype = Console.ReadLine();
-                succeded = Enum.TryParse(thetype, out type);
-            }
-            while (!succeded);
+                Console.WriteLine($"Found {listOfTransactionsOfTheType.Count()} transactions :");
+                foreach (Transaction transaction in listOfTransactionsOfTheType)
+                {
+                    Console.WriteLine(transaction);
+                }
 
-            Console.WriteLine("Would you like to delete, y for yes and n for no");
-            string input = Console.ReadLine();
-            switch (input.ToLower())
+            }
+            else
+            {
+                Console.WriteLine("No such transaction type");
+            }
+
+            Console.WriteLine("Would you like to delete the shown transactions y/n");
+            string command = Console.ReadLine();
+
+            switch (command.ToLower())
             {
                 case "y":
                     {
-                        Service.DeleteAllByType(type);
+                        Service.DeleteTransactionById(listOfTransactionsOfTheType.Select(t => t.Id)); // it selects the id from each transaction
                         Console.WriteLine("Transaction Deleted Successfully!");
                         break;
                     }
@@ -387,9 +403,79 @@ namespace Layerd.UI
                         Console.WriteLine("Wrong command");
                         break;
                     }
+            }
 
-            }   
 
+
+
+
+        }
+
+        public void FilterTransactionValues()
+        {
+
+            double cValue = ReadAmount();
+
+            IEnumerable<Transaction> listOfTransactionsLargerThan;
+
+            listOfTransactionsLargerThan = Service.FilterTransactionValues(cValue);
+
+            if (listOfTransactionsLargerThan.Any())
+            {
+                Console.WriteLine($"Found {listOfTransactionsLargerThan.Count()} transactions:");
+                foreach (Transaction transaction in listOfTransactionsLargerThan)
+                {
+                    Console.WriteLine(transaction);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No such transaction larger than the given amount");
+            }
+
+        }
+
+        public void FilterTransactionValueAndDate()
+        {
+            double amount = ReadAmount();
+            DateTime dateTime = ReadDate();
+
+            IEnumerable<Transaction> listOfTransactionsLargerThanAndBeforeDate;
+
+            listOfTransactionsLargerThanAndBeforeDate = Service.FilterTransactionValueAndDate(dateTime, amount);
+
+            if (listOfTransactionsLargerThanAndBeforeDate.Any())
+            {
+                Console.WriteLine($"Found {listOfTransactionsLargerThanAndBeforeDate.Count()} transactions:");
+                foreach (Transaction transaction in listOfTransactionsLargerThanAndBeforeDate)
+                {
+                    Console.WriteLine(transaction);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No such transaction larger than the given amount and before the given date");
+            }
+
+        }
+
+        public void FilterTransactionTypes()
+        {
+            TransactionType type = ReadEnum<TransactionType>();
+            IEnumerable<Transaction> listOfTransactionTypes = Service.FilterTransactionTypes(type);
+
+            if (listOfTransactionTypes.Any())
+            {
+                Console.WriteLine($"Found {listOfTransactionTypes.Count()} transactions:");
+                foreach (Transaction transaction in listOfTransactionTypes)
+                {
+                    Console.WriteLine(transaction);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No such transaction larger than the given amount and before the given date");
+            }
         }
 
     }

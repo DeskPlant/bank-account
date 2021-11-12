@@ -76,7 +76,7 @@ namespace Layerd
                         case 8:
                             {
                                 UI.DeleteThroughDate();
-                                
+
                                 break;
                             }
                         case 9:
@@ -87,6 +87,21 @@ namespace Layerd
                         case 10:
                             {
                                 UI.DeleteTransactionType();
+                                break;
+                            }
+                        case 11:
+                            {
+                                UI.FilterTransactionValues();
+                                break;
+                            }
+                        case 12:
+                            {
+                                UI.FilterTransactionValueAndDate();
+                                break;
+                            }
+                        case 13:
+                            {
+                                UI.FilterTransactionTypes();
                                 break;
                             }
                         default:

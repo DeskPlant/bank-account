@@ -12,7 +12,7 @@ namespace Layerd
             IRepository repository = new HashSetRepository();
             IService service = new TransactionService(repository);
             IUI ui = new TransactionUI(service);
-            BankAccounts bankAccount = new BankAccounts(ui);
+            BankAccounts bankAccount = new(ui);
             bankAccount.Run();
         }
     }
