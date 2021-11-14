@@ -26,17 +26,32 @@ namespace Layerd.UI
             Console.WriteLine("0. Close application.");
             Console.WriteLine("1. Display menu.");
             Console.WriteLine("2. Add new transaction.");
-            Console.WriteLine("3. Show all transactions.");
-            Console.WriteLine("4. Filter the transaction by name.");
-            Console.WriteLine("5. Filter the transaction by date.");
-            Console.WriteLine("6. Filter the transactions between 2 dates.");
-            Console.WriteLine("7. Update existing transaction through ID.");
-            Console.WriteLine("8. Delete transaction though a given date.");
-            Console.WriteLine("9. Delete transaction though a given interval of dates.");
-            Console.WriteLine("10. Delete transaction though a given type.");
-            Console.WriteLine("11. Show the Transactions bigger than a given amount.");
-            Console.WriteLine("12. Show the Transactions bigger than a given amount and before a given date");
-            Console.WriteLine("13. Filter the transactions by Type.");
+            Console.WriteLine("3. Update existing transaction through ID.");
+            Console.WriteLine("4. Show all transactions.");
+            Console.WriteLine("5. Filtering transactions menu");
+            Console.WriteLine("6. Deleting Transactions menu");
+            Console.WriteLine("7. Show the sum of the transaction values of a given type");
+            Console.WriteLine();
+        }
+
+        public void DisplayFilters()
+        {
+            Console.WriteLine("0.Go back to previous menu");
+            Console.WriteLine("1. Filter the transaction by name.");
+            Console.WriteLine("2. Filter the transaction by date.");
+            Console.WriteLine("3. Filter the transactions between 2 dates.");
+            Console.WriteLine("4. Filter the transactions bigger than a given amount.");
+            Console.WriteLine("5. Filter the transactions bigger than a given amount and before a given date");
+            Console.WriteLine("6. Filter the transactions by Type.");
+            Console.WriteLine();
+        }
+
+        public void DisplayDeletes()
+        {
+            Console.WriteLine("0.Go back to previous menu");
+            Console.WriteLine("1. Delete transaction though a given date.");
+            Console.WriteLine("2. Delete transaction though a given interval of dates.");
+            Console.WriteLine("3. Delete transaction though a given type.");
             Console.WriteLine();
         }
 
@@ -174,7 +189,6 @@ namespace Layerd.UI
                 Console.WriteLine("No transactions with such name.");
             }
         }
-
         public void FilterBetweenDates()
         {
 
@@ -233,7 +247,6 @@ namespace Layerd.UI
 
         public void UpdateTransaction()
         {
-
             Guid id = ReadGuid();
 
             Console.WriteLine("Enter the new Values for your Updated Transaction");
@@ -257,7 +270,7 @@ namespace Layerd.UI
             };
 
             Service.UpdateTransaction(transaction);
-
+            Console.WriteLine("Transaction updated");
         }
 
         public void DeleteThroughDate()
@@ -308,14 +321,12 @@ namespace Layerd.UI
 
         public void DeleteTransactionsBetweenDates()
         {
-
             DateTime dateTime = ReadDate();
             DateTime secondDateTime = ReadDate();
 
             IEnumerable<Transaction> listOfTransactions;
 
             listOfTransactions = Service.FilterBetweenDates(dateTime, secondDateTime);
-
 
             if (listOfTransactions.Any())
             {
@@ -332,7 +343,6 @@ namespace Layerd.UI
 
             Console.WriteLine("Would you like to delete the Transactions shown. Press y for Yes and n for No");
             Console.WriteLine("");
-
 
             string input = Console.ReadLine();
             switch (input.ToLower())
@@ -354,9 +364,7 @@ namespace Layerd.UI
                         Console.WriteLine("Wrong command");
                         break;
                     }
-
             }
-
         }
 
         public void DeleteTransactionType()
@@ -367,14 +375,13 @@ namespace Layerd.UI
 
             listOfTransactionsOfTheType = Service.FilterTransactionTypes(type);
 
-            if(listOfTransactionsOfTheType.Any())
+            if (listOfTransactionsOfTheType.Any())
             {
                 Console.WriteLine($"Found {listOfTransactionsOfTheType.Count()} transactions :");
                 foreach (Transaction transaction in listOfTransactionsOfTheType)
                 {
                     Console.WriteLine(transaction);
                 }
-
             }
             else
             {
@@ -404,16 +411,10 @@ namespace Layerd.UI
                         break;
                     }
             }
-
-
-
-
-
         }
 
         public void FilterTransactionValues()
         {
-
             double cValue = ReadAmount();
 
             IEnumerable<Transaction> listOfTransactionsLargerThan;
@@ -476,6 +477,18 @@ namespace Layerd.UI
             {
                 Console.WriteLine("No such transaction larger than the given amount and before the given date");
             }
+        }
+
+        public void ShowTypeAmount()
+        {
+            TransactionType type = ReadEnum<TransactionType>();
+
+            IEnumerable<Transaction> listOfType = Service.FilterTransactionTypes(type);
+
+            double sum = Service.ShowTypeAmount(type);
+
+            Console.WriteLine($"Found {listOfType.Count()} tansactions totaling a value of : {sum}$");
+
         }
 
     }

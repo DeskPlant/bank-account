@@ -268,5 +268,17 @@ namespace Layerd.Repository
             return listOfTransactionType;
         }
 
+        public double ShowTypeAmount(TransactionType type)
+        {
+            double sumOfTransactions = 0;
+
+            foreach (Transaction transaction in Transactions)
+            {
+                if (transaction.Type == type)
+                    sumOfTransactions = transaction.Amount + sumOfTransactions;
+            }
+            return sumOfTransactions;
+        }
+
     }
 }

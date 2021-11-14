@@ -45,65 +45,130 @@ namespace Layerd
                             }
                         case 3:
                             {
-                                UI.DisplayAllTransactions();
+                                UI.UpdateTransaction();
                                 Console.WriteLine();
                                 break;
                             }
                         case 4:
                             {
-                                UI.FilterByName();
+                                UI.DisplayAllTransactions();
                                 Console.WriteLine();
                                 break;
                             }
                         case 5:
                             {
-                                UI.FilterByDate();
-                                Console.WriteLine();
+                                UI.DisplayFilters();
+                                int command2 = UI.ReadCommand();
+                                switch (command2)
+                                {
+                                    case 0:
+                                        {
+                                            UI.DisplayMenu();
+                                            break;
+                                        }
+                                    case 1:
+                                        {
+                                            UI.FilterByName();
+                                            Console.WriteLine();
+                                            UI.DisplayMenu();
+                                            break;
+                                        }
+                                    case 2:
+                                        {
+                                            UI.FilterByDate();
+                                            Console.WriteLine();
+                                            UI.DisplayMenu();
+                                            break;
+                                        }
+                                    case 3:
+                                        {
+                                            UI.FilterBetweenDates();
+                                            Console.WriteLine();
+                                            UI.DisplayMenu();
+                                            break;
+                                        }
+                                    case 4:
+                                        {
+                                            UI.FilterTransactionValues();
+                                            Console.WriteLine();
+                                            UI.DisplayMenu();
+                                            break;
+                                        }
+                                    case 5:
+                                        {
+                                            UI.FilterTransactionValueAndDate();
+                                            Console.WriteLine();
+                                            UI.DisplayMenu();
+                                            break;
+                                        }
+                                    case 6:
+                                        {
+                                            UI.FilterTransactionTypes();
+                                            Console.WriteLine();
+                                            UI.DisplayMenu();
+                                            break;
+                                        }
+                                    default:
+                                        {
+                                            Console.WriteLine("No such command.");
+                                            Console.WriteLine();
+                                            break;
+                                        }
+
+                                }
                                 break;
                             }
                         case 6:
                             {
-                                UI.FilterBetweenDates();
-                                Console.WriteLine();
+                                UI.DisplayDeletes();
+                                int command3 = UI.ReadCommand();
+                                switch (command3)
+                                {
+                                    case 0:
+                                        {
+                                            UI.DisplayMenu();
+                                            Console.WriteLine();
+                                            UI.DisplayMenu();
+                                            break;
+                                        }
+                                    case 1:
+                                        {
+                                            UI.DeleteThroughDate();
+                                            Console.WriteLine();
+                                            UI.DisplayMenu();
+                                            break;       
+                                        }
+                                    case 2:
+                                        {
+                                            UI.DeleteTransactionsBetweenDates();
+                                            Console.WriteLine();
+                                            UI.DisplayMenu();
+                                            break;
+                                        }
+                                    case 3:
+                                        {
+                                            UI.DeleteTransactionType();
+                                            Console.WriteLine();
+                                            UI.DisplayMenu();
+                                            break;
+                                        }
+                                    default:
+                                        {
+                                            Console.WriteLine("No such command.");
+                                            Console.WriteLine();
+                                            break;
+                                        }
+                                }
                                 break;
                             }
+
                         case 7:
                             {
-                                UI.UpdateTransaction();
+                                UI.ShowTypeAmount();
                                 Console.WriteLine();
                                 break;
                             }
-                        case 8:
-                            {
-                                UI.DeleteThroughDate();
 
-                                break;
-                            }
-                        case 9:
-                            {
-                                UI.DeleteTransactionsBetweenDates();
-                                break;
-                            }
-                        case 10:
-                            {
-                                UI.DeleteTransactionType();
-                                break;
-                            }
-                        case 11:
-                            {
-                                UI.FilterTransactionValues();
-                                break;
-                            }
-                        case 12:
-                            {
-                                UI.FilterTransactionValueAndDate();
-                                break;
-                            }
-                        case 13:
-                            {
-                                UI.FilterTransactionTypes();
-                                break;
-                            }
                         default:
                             {
                                 Console.WriteLine("No such command.");

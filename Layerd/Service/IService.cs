@@ -35,6 +35,8 @@ namespace Layerd.Service
         public IEnumerable<Transaction> FilterTransactionValueAndDate(DateTime dateTime, double amount);
 
         public IEnumerable<Transaction> FilterTransactionTypes(TransactionType type);
+
+        public double ShowTypeAmount(TransactionType type);
     }
 
 }

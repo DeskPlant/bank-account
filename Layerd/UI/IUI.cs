@@ -6,6 +6,10 @@
 
         public void DisplayMenu();
 
+        public void DisplayFilters();
+
+        public void DisplayDeletes();
+
         public int ReadCommand();
 
         public void AddTransaction();
@@ -31,5 +35,7 @@
         public void FilterTransactionValueAndDate();
 
         public void FilterTransactionTypes();
+
+        public void ShowTypeAmount();
     }
 }

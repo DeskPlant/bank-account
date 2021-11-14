@@ -202,5 +202,10 @@ namespace Layerd.Repository
         {
             throw new NotImplementedException();
         }
+
+        public double ShowTypeAmount(TransactionType type)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

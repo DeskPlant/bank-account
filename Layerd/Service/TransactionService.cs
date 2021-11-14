@@ -90,5 +90,10 @@ namespace Layerd.Service
         {
             return Repository.FilterTransactionTypes(type);
         }
+
+        public double ShowTypeAmount(TransactionType type)
+        {
+            return Repository.ShowTypeAmount(type);
+        }
     }
 }
