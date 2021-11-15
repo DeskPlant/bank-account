@@ -37,5 +37,7 @@
         public void FilterTransactionTypes();
 
         public void ShowTypeAmount();
+
+        public void AccountBallanceAtGivenTime();
     }
 }

@@ -95,5 +95,27 @@ namespace Layerd.Service
         {
             return Repository.ShowTypeAmount(type);
         }
+
+        public double AccountBallanceAtGivenTime(DateTime time)
+        {
+            IEnumerable<Transaction> list = Repository.AccountBallanceAtGivenTime(time);
+            double ballanceIncoming = 0;
+            double ballanceOutgoing = 0;
+
+            foreach (Transaction transaction in list)
+            {
+                if (transaction.Type == TransactionType.Incoming)
+                {
+                    ballanceIncoming = transaction.Amount + ballanceIncoming;
+                }
+                else
+                    if (transaction.Type == TransactionType.Outgoing)
+                {
+                    ballanceOutgoing = transaction.Amount + ballanceOutgoing;
+                }
+            }
+
+            return ballanceIncoming - ballanceOutgoing;
+        }
     }
 }

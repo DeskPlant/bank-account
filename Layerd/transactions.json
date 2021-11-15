@@ -1,43 +1,29 @@
 [
   {
-    "Id": "d8eb9615-7ea9-440a-a35c-70302073d08e",
-    "Date": "2001-01-01T01:01:01",
-    "Name": "not ptr",
-    "Amount": 95.0,
+    "Id": "933e996f-ad37-4721-8f38-3d670a179854",
+    "Date": "2000-06-19T02:02:02",
+    "Name": "inc",
+    "Amount": 100.0,
     "Type": 0
   },
   {
-    "Id": "f8d0a586-0e5f-4b78-8e66-069d9d5ddc23",
-    "Date": "2000-02-02T05:05:05",
-    "Name": "grape",
-    "Amount": 202134.0,
-    "Type": 0
-  },
-  {
-    "Id": "bf9c893d-a124-4dce-8d14-ae7cfa82cb7a",
-    "Date": "1999-02-21T05:05:05",
-    "Name": "fish",
-    "Amount": 95.0,
-    "Type": 0
-  },
-  {
-    "Id": "d596ce9a-a96a-4389-a315-f12a6b54e507",
-    "Date": "0001-01-01T05:05:05",
-    "Name": "jesus",
-    "Amount": 95.0,
-    "Type": 0
-  },
-  {
-    "Id": "2d250a9d-8137-4c7e-bfe3-19cbd6c6bb1d",
-    "Date": "2000-09-16T02:02:02",
-    "Name": "ptr",
-    "Amount": 95.0,
+    "Id": "463d7aa7-060a-44ba-81ec-8065cf127c40",
+    "Date": "2000-06-20T02:02:02",
+    "Name": "out",
+    "Amount": 50.0,
     "Type": 1
   },
   {
-    "Id": "543bd958-db8e-4930-8271-c3ec92a5b531",
-    "Date": "2000-09-16T02:02:02",
-    "Name": "ptr",
+    "Id": "4abfdc4b-a547-4caf-81c9-a3ba39f8c67d",
+    "Date": "2000-10-01T01:01:01",
+    "Name": "inc",
+    "Amount": 10.0,
+    "Type": 0
+  },
+  {
+    "Id": "b4784bec-135b-481b-af06-3a722b3cba65",
+    "Date": "2000-10-01T01:01:05",
+    "Name": "out",
     "Amount": 5.0,
     "Type": 1
   }

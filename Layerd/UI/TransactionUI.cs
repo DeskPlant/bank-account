@@ -27,10 +27,10 @@ namespace Layerd.UI
             Console.WriteLine("1. Display menu.");
             Console.WriteLine("2. Add new transaction.");
             Console.WriteLine("3. Update existing transaction through ID.");
-            Console.WriteLine("4. Show all transactions.");
-            Console.WriteLine("5. Filtering transactions menu");
-            Console.WriteLine("6. Deleting Transactions menu");
-            Console.WriteLine("7. Show the sum of the transaction values of a given type");
+            Console.WriteLine("4. Filtering transactions menu");
+            Console.WriteLine("5. Deleting Transactions menu");
+            Console.WriteLine("6. Show the sum of the transaction values of a given type");
+            Console.WriteLine("7. Show account balance at a given date.");
             Console.WriteLine();
         }
 
@@ -43,6 +43,7 @@ namespace Layerd.UI
             Console.WriteLine("4. Filter the transactions bigger than a given amount.");
             Console.WriteLine("5. Filter the transactions bigger than a given amount and before a given date");
             Console.WriteLine("6. Filter the transactions by Type.");
+            Console.WriteLine("7. Show all transactions.");
             Console.WriteLine();
         }
 
@@ -489,6 +490,15 @@ namespace Layerd.UI
 
             Console.WriteLine($"Found {listOfType.Count()} tansactions totaling a value of : {sum}$");
 
+        }
+
+        public void AccountBallanceAtGivenTime()
+        {
+            DateTime dateTime = ReadDate();
+
+            double ballance = Service.AccountBallanceAtGivenTime(dateTime);
+
+            Console.WriteLine($"Your account ballance at this date is : {ballance}$");
         }
 
     }

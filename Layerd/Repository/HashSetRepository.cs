@@ -202,22 +202,22 @@ namespace Layerd.Repository
         public void WipeRepository(bool updateFile = true)
         {
             Transactions.Clear();
-            if(updateFile)
+            if (updateFile)
             {
-               UpdateFile();
+                UpdateFile();
             }
         }
 
         public Transaction GetTransactionById(Guid id)
         {
             return Transactions.FirstOrDefault(transaction => transaction.Id == id);
-        } 
+        }
 
         public void DeleteAllByType(TransactionType type)
         {
             foreach (Transaction transaction in Transactions.ToArray())
             {
-                if(transaction.Type == type)
+                if (transaction.Type == type)
                 {
                     Transactions.Remove(transaction);
                     UpdateFile();
@@ -231,7 +231,7 @@ namespace Layerd.Repository
 
             foreach (Transaction transaction in Transactions)
             {
-                if(cValue < transaction.Amount)
+                if (cValue < transaction.Amount)
                 {
                     listOfTransactionsBigger.Add(transaction);
                 }
@@ -246,7 +246,7 @@ namespace Layerd.Repository
 
             foreach (Transaction transaction in Transactions)
             {
-                if(amount < transaction.Amount && dateTime > transaction.Date)
+                if (amount < transaction.Amount && dateTime > transaction.Date)
                 {
                     listOfTransactionsBiggerAndDate.Add(transaction);
                 }
@@ -280,5 +280,17 @@ namespace Layerd.Repository
             return sumOfTransactions;
         }
 
+        public IEnumerable<Transaction> AccountBallanceAtGivenTime(DateTime time)
+        {
+            List<Transaction> theTransactionsforedate = new();
+
+            foreach (Transaction transaction in Transactions)
+            {
+                if (transaction.Date < time)
+                    theTransactionsforedate.Add(transaction);
+            }
+
+            return theTransactionsforedate;
+        }
     }
 }

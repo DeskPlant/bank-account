@@ -207,5 +207,15 @@ namespace Layerd.Repository
         {
             throw new NotImplementedException();
         }
+
+        public double AccountBallanceAtGivenTime(DateTime time)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<Transaction> IRepository.AccountBallanceAtGivenTime(DateTime time)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -51,12 +51,6 @@ namespace Layerd
                             }
                         case 4:
                             {
-                                UI.DisplayAllTransactions();
-                                Console.WriteLine();
-                                break;
-                            }
-                        case 5:
-                            {
                                 UI.DisplayFilters();
                                 int command2 = UI.ReadCommand();
                                 switch (command2)
@@ -108,6 +102,12 @@ namespace Layerd
                                             UI.DisplayMenu();
                                             break;
                                         }
+                                    case 7:
+                                        {
+                                            UI.DisplayAllTransactions();
+                                            Console.WriteLine();
+                                            break;
+                                        }
                                     default:
                                         {
                                             Console.WriteLine("No such command.");
@@ -118,7 +118,7 @@ namespace Layerd
                                 }
                                 break;
                             }
-                        case 6:
+                        case 5:
                             {
                                 UI.DisplayDeletes();
                                 int command3 = UI.ReadCommand();
@@ -162,9 +162,15 @@ namespace Layerd
                                 break;
                             }
 
-                        case 7:
+                        case 6:
                             {
                                 UI.ShowTypeAmount();
+                                Console.WriteLine();
+                                break;
+                            }
+                        case 7:
+                            {
+                                UI.AccountBallanceAtGivenTime();
                                 Console.WriteLine();
                                 break;
                             }
