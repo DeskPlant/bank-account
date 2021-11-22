@@ -44,6 +44,7 @@ namespace Layerd.UI
             Console.WriteLine("5. Filter the transactions bigger than a given amount and before a given date");
             Console.WriteLine("6. Filter the transactions by Type.");
             Console.WriteLine("7. Show all transactions.");
+            Console.WriteLine("8. Filter the transactions of a given type by its amount.");
             Console.WriteLine();
         }
 
@@ -160,6 +161,7 @@ namespace Layerd.UI
             }
             else
             {
+                Console.WriteLine();
                 Console.WriteLine("Transaction added succesfully.");
             }
         }
@@ -250,6 +252,7 @@ namespace Layerd.UI
         {
             Guid id = ReadGuid();
 
+            Console.WriteLine();
             Console.WriteLine("Enter the new Values for your Updated Transaction");
             Console.WriteLine();
 
@@ -271,6 +274,7 @@ namespace Layerd.UI
             };
 
             Service.UpdateTransaction(transaction);
+            Console.WriteLine();
             Console.WriteLine("Transaction updated");
         }
 
@@ -499,6 +503,24 @@ namespace Layerd.UI
             double ballance = Service.AccountBallanceAtGivenTime(dateTime);
 
             Console.WriteLine($"Your account ballance at this date is : {ballance}$");
+        }
+
+        public void  FilterByTypeAndAmount()
+        {
+            TransactionType type = ReadEnum<TransactionType>();
+
+            IEnumerable<Transaction> listOfTypeBySum = Service. FilterByTypeAndAmount(type);
+
+            if (listOfTypeBySum.Any())
+            {
+                Console.WriteLine($"Found {listOfTypeBySum.Count()} transactions:");
+                foreach (Transaction transaction in listOfTypeBySum)
+                {
+                    Console.WriteLine(transaction);
+                }
+            }
+            else
+                Console.WriteLine("Transaction list is empty");
         }
 
     }

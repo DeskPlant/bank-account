@@ -117,5 +117,10 @@ namespace Layerd.Service
 
             return ballanceIncoming - ballanceOutgoing;
         }
+
+        public IEnumerable<Transaction>  FilterByTypeAndAmount(TransactionType type)
+        {
+            return Repository. FilterByTypeAndAmount(type);
+        }
     }
 }

@@ -41,12 +41,14 @@ namespace Layerd
                             {
                                 UI.AddTransaction();
                                 Console.WriteLine();
+                                UI.DisplayMenu();
                                 break;
                             }
                         case 3:
                             {
                                 UI.UpdateTransaction();
                                 Console.WriteLine();
+                                UI.DisplayMenu();
                                 break;
                             }
                         case 4:
@@ -106,12 +108,21 @@ namespace Layerd
                                         {
                                             UI.DisplayAllTransactions();
                                             Console.WriteLine();
+                                            UI.DisplayMenu();
+                                            break;
+                                        }
+                                    case 8:
+                                        {
+                                            UI. FilterByTypeAndAmount();
+                                            Console.WriteLine();
+                                            UI.DisplayMenu();
                                             break;
                                         }
                                     default:
                                         {
                                             Console.WriteLine("No such command.");
                                             Console.WriteLine();
+                                            UI.DisplayMenu();
                                             break;
                                         }
 
@@ -156,6 +167,7 @@ namespace Layerd
                                         {
                                             Console.WriteLine("No such command.");
                                             Console.WriteLine();
+                                            UI.DisplayMenu();
                                             break;
                                         }
                                 }
@@ -166,12 +178,14 @@ namespace Layerd
                             {
                                 UI.ShowTypeAmount();
                                 Console.WriteLine();
+                                UI.DisplayMenu();
                                 break;
                             }
                         case 7:
                             {
                                 UI.AccountBallanceAtGivenTime();
                                 Console.WriteLine();
+                                UI.DisplayMenu();
                                 break;
                             }
 

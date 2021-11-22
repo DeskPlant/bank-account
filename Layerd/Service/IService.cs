@@ -39,7 +39,9 @@ namespace Layerd.Service
         public double ShowTypeAmount(TransactionType type);
 
         public double AccountBallanceAtGivenTime(DateTime time);
- 
+
+        public IEnumerable<Transaction>  FilterByTypeAndAmount(TransactionType type);
+
     }
 
 }

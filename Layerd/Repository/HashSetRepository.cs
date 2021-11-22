@@ -292,5 +292,14 @@ namespace Layerd.Repository
 
             return theTransactionsforedate;
         }
+
+        public IEnumerable<Transaction>  FilterByTypeAndAmount(TransactionType type)
+        {
+            IEnumerable<Transaction> listOfTypeByAmount = FilterTransactionTypes(type);
+
+            IEnumerable<Transaction> list = listOfTypeByAmount.OrderBy(transaction => transaction.Amount);
+
+            return list;
+        }
     }
 }

@@ -217,5 +217,10 @@ namespace Layerd.Repository
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Transaction>  FilterByTypeAndAmount(TransactionType type)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

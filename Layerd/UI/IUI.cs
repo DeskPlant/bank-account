@@ -39,5 +39,7 @@
         public void ShowTypeAmount();
 
         public void AccountBallanceAtGivenTime();
+
+        public void  FilterByTypeAndAmount();
     }
 }

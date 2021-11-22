@@ -26,5 +26,26 @@
     "Name": "out",
     "Amount": 5.0,
     "Type": 1
+  },
+  {
+    "Id": "65c6e5c3-fc00-4aeb-81e7-f0a369239d09",
+    "Date": "2000-06-19T02:00:00",
+    "Name": "ptr",
+    "Amount": 95.0,
+    "Type": 0
+  },
+  {
+    "Id": "bcb12f40-0a46-40dc-8bbc-bfa842ab9f90",
+    "Date": "2077-07-07T07:07:07",
+    "Name": "more testing",
+    "Amount": 95.0,
+    "Type": 0
+  },
+  {
+    "Id": "c8815a9c-50f4-441d-a15b-bb723ef086ea",
+    "Date": "0202-10-10T02:02:02",
+    "Name": "j",
+    "Amount": 932.0,
+    "Type": 1
   }
 ]
