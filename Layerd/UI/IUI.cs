@@ -1,45 +1,45 @@
 ﻿namespace Layerd.UI
 {
-    public interface IUI
-    {
-        public void UpdateFile();
+	public interface IUI
+	{
+		public void UpdateFile();
 
-        public void DisplayMenu();
+		public void DisplayMenu();
 
-        public void DisplayFilters();
+		public void DisplayFilters();
 
-        public void DisplayDeletes();
+		public void DisplayDeletes();
 
-        public int ReadCommand();
+		public int ReadCommand();
 
-        public void AddTransaction();
+		public void AddTransaction();
 
-        public void DisplayAllTransactions();
+		public void DisplayAllTransactions();
 
-        public void FilterByName();
+		public void FilterTransactionsByName();
 
-        public void FilterByDate();
+		public void FilterTransactionsByDate();
 
-        public void FilterBetweenDates();
+		public void FilterTransactionsBetweenDates();
 
-        public void UpdateTransaction();
+		public void UpdateTransaction();
 
-        public void DeleteThroughDate();
+		public void DeleteTransactionsByDate();
 
-        public void DeleteTransactionsBetweenDates();
+		public void DeleteTransactionsBetweenDates();
 
-        public void DeleteTransactionType();
+		public void DeleteTransactionsByType();
 
-        public void FilterTransactionValues();
+		public void FilterTransactionsByValueLessThan();
 
-        public void FilterTransactionValueAndDate();
+		public void FilterTransactionsByValueAndDate();
 
-        public void FilterTransactionTypes();
+		public void FilterTransactionsByType();
 
-        public void ShowTypeAmount();
+		public void ShowTypeAmount();
 
-        public void AccountBallanceAtGivenTime();
+		public void AccountBallanceAtGivenTime();
 
-        public void  FilterByTypeAndAmount();
-    }
+		public void FilterTransactionsByTypeAndOrderByAmount();
+	}
 }

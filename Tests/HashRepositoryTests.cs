@@ -141,7 +141,7 @@ namespace Tests
                 hashSetRepository.AddTransaction(transaction);
             }
 
-            Assert.AreEqual(2, hashSetRepository.FilterWithDate(FilterType.BeforeDate, new DateTime(2015, 4, 22)).Count());
+            Assert.AreEqual(2, hashSetRepository.FilterByTypeAndDate(FilterType.BeforeDate, new DateTime(2015, 4, 22)).Count());
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace Tests
                 hashSetRepository.AddTransaction(transaction);
             }
 
-            Assert.AreEqual(1, hashSetRepository.FilterWithDate(FilterType.AfterDate, new DateTime(2015, 4, 22)).Count());
+            Assert.AreEqual(1, hashSetRepository.FilterByTypeAndDate(FilterType.AfterDate, new DateTime(2015, 4, 22)).Count());
         }
 
         [Test]
@@ -232,7 +232,7 @@ namespace Tests
                 hashSetRepository.AddTransaction(transaction);
             }
 
-            Assert.AreEqual(1, hashSetRepository.FilterByOneDate(transactions[0].Date).Count());
+            Assert.AreEqual(1, hashSetRepository.FilterByDate(transactions[0].Date).Count());
         }
 
         [Test]
@@ -245,7 +245,7 @@ namespace Tests
                 hashSetRepository.AddTransaction(transaction);
             }
 
-            Assert.IsEmpty(hashSetRepository.FilterByOneDate(new DateTime(2020, 2, 21)));
+            Assert.IsEmpty(hashSetRepository.FilterByDate(new DateTime(2020, 2, 21)));
         }
 
         [Test]

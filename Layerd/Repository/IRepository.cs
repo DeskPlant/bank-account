@@ -4,53 +4,49 @@ using Layerd.Domain;
 
 namespace Layerd.Repository
 {
-    //crud operations
-    //create    add new stuff to file
-    //read      read stuff from file
-    //update    update/change stuff from file
-    //delete    delete some stuff from file
-    public interface IRepository
-    {
-        public void WipeRepository(bool updateFile);
+	//crud operations
+	//create    add new stuff to file
+	//read      read stuff from file
+	//update    update/change stuff from file
+	//delete    delete some stuff from file
+	public interface IRepository
+	{
+		public void WipeRepository(bool updateFile);
 
-        public Transaction AddTransaction(Transaction transaction);
+		public Transaction AddTransaction(Transaction transaction);
 
-        public Transaction GetTransactionById(Guid id);
-        
-        public IEnumerable<Transaction> GetAllTransactions();
+		public Transaction GetTransactionById(Guid id);
 
-        public void UpdateFile();
+		public IEnumerable<Transaction> GetAllTransactions();
 
-        public void ReadAllFromFile();
+		public void UpdateFile();
 
-        public IEnumerable<Transaction> FilterByName(string transactionName);
+		public void ReadAllFromFile();
 
-        public IEnumerable<Transaction> FilterWithDate(FilterType type, DateTime dateTime);
+		public IEnumerable<Transaction> FilterTransactionsByName(string transactionName);
 
-        public IEnumerable<Transaction> FilterBetweenDates(DateTime first, DateTime second);
+		public IEnumerable<Transaction> FilterTransactionsByTypeAndDate(FilterType type, DateTime dateTime);
 
-        public Transaction UpdateTransaction(Transaction transaction);
+		public IEnumerable<Transaction> FilterBetweenDates(DateTime first, DateTime second);
 
-        public void DeleteTransactionsByDate(DateTime date);
+		public Transaction UpdateTransaction(Transaction transaction);
 
-        public IEnumerable<Transaction> FilterByOneDate(DateTime date);
+		public IEnumerable<Transaction> FilterTransactionsByDate(DateTime date);
 
-        public void DeleteTransactionById(Guid id);
+		public void DeleteTransactionById(Guid id);
 
-        public void DeleteTransactionById(IEnumerable<Guid> ids);
+		public void DeleteTransactionsById(IEnumerable<Guid> ids);
 
-        public void DeleteAllByType(TransactionType type);
+		public void DeleteAllByType(TransactionType type);
 
-        public IEnumerable<Transaction> FilterTransactionValues(double cValue);
+		public IEnumerable<Transaction> FilterTransactionsByValueLessThan(double value);
 
-        public IEnumerable<Transaction> FilterTransactionValueAndDate(DateTime dateTime, double amount);
+		public IEnumerable<Transaction> FilterTransactionBeforDateAndBiggerThanAmount(DateTime dateTime, double amount);
 
-        public IEnumerable<Transaction> FilterTransactionTypes(TransactionType type);
+		public IEnumerable<Transaction> FilterTransactionsByType(TransactionType type);
 
-        public double ShowTypeAmount(TransactionType type);
+		public IEnumerable<Transaction> FilterTransactionsBeforeDate(DateTime time);
 
-        public IEnumerable<Transaction> AccountBallanceAtGivenTime(DateTime time);
-
-        public IEnumerable<Transaction>  FilterByTypeAndAmount(TransactionType type);
-    }
+		public IEnumerable<Transaction> FilterTransactionsByTypeAndOrderByAmount(TransactionType type);
+	}
 }

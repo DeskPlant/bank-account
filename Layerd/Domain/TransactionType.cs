@@ -1,10 +1,8 @@
 ﻿namespace Layerd.Domain
 {
-    public enum TransactionType
-    {
-        Incoming,
-        Outgoing
-    }
-
-   
+	public enum TransactionType
+	{
+		Incoming,
+		Outgoing
+	}
 }
