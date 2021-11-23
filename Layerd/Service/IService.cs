@@ -6,6 +6,8 @@ namespace Layerd.Service
 {
 	public interface IService
 	{
+		public void ChangeIOFile(string path);
+
 		public void UpdateFile();
 
 		public Transaction AddTransaction(Transaction transaction);

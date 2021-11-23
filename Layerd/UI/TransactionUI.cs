@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Layerd.Domain;
 using Layerd.Service;
@@ -31,6 +32,7 @@ namespace Layerd.UI
 			Console.WriteLine("5. Deleting Transactions menu");
 			Console.WriteLine("6. Show the sum of the transaction values of a given type");
 			Console.WriteLine("7. Show account balance at a given date.");
+			Console.WriteLine("8. Change IO file path.");
 			Console.WriteLine();
 		}
 
@@ -65,7 +67,7 @@ namespace Layerd.UI
 			return int.TryParse(str, out int command) ? command : -1;
 		}
 
-		static Guid ReadGuid()
+		public static Guid ReadGuid()
 		{
 			Guid id;
 			bool succeded;
@@ -82,7 +84,7 @@ namespace Layerd.UI
 			return id;
 		}
 
-		static DateTime ReadDate(string format = "yyyy/MM/dd HH:mm:ss")
+		public static DateTime ReadDate(string format = "yyyy/MM/dd HH:mm:ss")
 		{
 			DateTime dateTime;
 			bool succeded;
@@ -98,7 +100,7 @@ namespace Layerd.UI
 			return dateTime;
 		}
 
-		static double ReadAmount()
+		public static double ReadAmount()
 		{
 			double amount;
 			bool succeded;
@@ -113,10 +115,24 @@ namespace Layerd.UI
 			return amount;
 		}
 
-		static string ReadString(string hint)
+		public static string ReadString(string hint)
 		{
 			Console.WriteLine(hint);
 			string name = Console.ReadLine();
+			return name;
+		}
+
+		public static string ReadString(string hint, IEnumerable<string> validStrings)
+		{
+			string name;
+			do
+			{
+				Console.WriteLine(hint);
+				Console.WriteLine($"Read string must be from collection: {string.Join(", ", validStrings)}");
+				name = Console.ReadLine();
+			}
+			while (!validStrings.Contains(name));
+
 			return name;
 		}
 
@@ -136,6 +152,40 @@ namespace Layerd.UI
 			while (!list.Contains(transactionType));
 
 			return (T)Enum.Parse(typeof(T), transactionType);
+		}
+
+		public IOChangeResult ChangeIOFile()
+		{
+			string path = ReadString("Enter your new path to transactions list");
+
+			while (true)
+			{
+				try
+				{
+					Service.ChangeIOFile(path);
+					break;
+				}
+				catch (DirectoryNotFoundException exception)
+				{
+					Console.WriteLine(exception.Message);
+
+					string input = ReadString("Do you want to try another path? Press y for Yes and n for No", new[] { "y", "n" });
+
+					switch (input.ToLower())
+					{
+						case "y":
+							{
+								break;
+							}
+						default:
+							{
+								return IOChangeResult.Failed;
+							}
+					}
+				}
+			}
+
+			return IOChangeResult.Succeded;
 		}
 
 		// add transaction (date, name, sum, type)
@@ -284,10 +334,7 @@ namespace Layerd.UI
 					Console.WriteLine(transaction.Name.ToString());
 				}
 
-				Console.WriteLine("Would you like to delete the Transactions shown. Press y for Yes and n for No");
-				Console.WriteLine();
-
-				string input = Console.ReadLine();
+				string input = ReadString("Would you like to delete the Transactions shown. Press y for Yes and n for No\n", new[] { "y", "n" });
 				switch (input.ToLower())
 				{
 					case "y":
@@ -337,10 +384,8 @@ namespace Layerd.UI
 				Console.WriteLine("No such transaction betweem those dates.");
 			}
 
-			Console.WriteLine("Would you like to delete the Transactions shown. Press y for Yes and n for No");
-			Console.WriteLine();
+			string input = ReadString("Would you like to delete the Transactions shown. Press y for Yes and n for No", new[] { "y", "n" });
 
-			string input = Console.ReadLine();
 			switch (input.ToLower())
 			{
 				case "y":
@@ -386,8 +431,7 @@ namespace Layerd.UI
 				Console.WriteLine("No such transaction type");
 			}
 
-			Console.WriteLine("Would you like to delete the shown transactions y/n");
-			string command = Console.ReadLine();
+			string command = ReadString("Would you like to delete the shown transactions (y/n)", new[] { "y", "n" });
 
 			switch (command.ToLower())
 			{

@@ -10,6 +10,11 @@ namespace Layerd.Service
 	{
 		public IRepository Repository { get; set; }
 
+		public void ChangeIOFile(string path)
+		{
+			Repository.ChangeIOFile(path);
+		}
+
 		public void UpdateFile()
 		{
 			Repository.UpdateFile();

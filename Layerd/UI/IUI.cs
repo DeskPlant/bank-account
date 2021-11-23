@@ -1,7 +1,11 @@
-﻿namespace Layerd.UI
+﻿using Layerd.Domain;
+
+namespace Layerd.UI
 {
 	public interface IUI
 	{
+		public IOChangeResult ChangeIOFile();
+
 		public void UpdateFile();
 
 		public void DisplayMenu();

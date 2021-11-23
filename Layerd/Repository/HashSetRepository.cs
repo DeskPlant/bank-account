@@ -7,280 +7,313 @@ using System.Linq;
 
 namespace Layerd.Repository
 {
-    public class HashSetRepository : IRepository
-    {
-        public readonly string SourceFile = @"..\..\..\transactions.json";
+	public class HashSetRepository : IRepository
+	{
+		private string sourceFile = @"..\..\..\transactions.json";
 
-        private HashSet<Transaction> Transactions { get; } = new HashSet<Transaction>();
+		public string SourceFile
+		{
+			get
+			{
+				return sourceFile;
+			}
+			set
+			{
+				FileInfo fileInfo = new(value);
 
-        public HashSetRepository(string sourceFile = @"..\..\..\transactions.json")
-        {
-            SourceFile = sourceFile;
-            ReadAllFromFile();
-        }
+				if (!fileInfo.Directory.Exists)
+				{
+					value = @"transactions.json";
+				}
 
-        public Transaction AddTransaction(Transaction transaction)
-        {
-            if (Transactions.Add(transaction))
-            {
-                UpdateFile();
-                return transaction;
-            }
-            else
-            {
-                return null;
-            }
-        }
+				fileInfo = new(value);
 
-        public IEnumerable<Transaction> GetAllTransactions()
-        {
-            return Transactions;
-        }
+				if (!fileInfo.Exists)
+				{
+					fileInfo.Create().Close();
+				}
 
-        public void UpdateFile()
-        {
-            // transforms Transactions into a string
-            string jsonString = JsonConvert.SerializeObject(Transactions, Formatting.Indented);
+				sourceFile = value;
+			}
+		}
 
-            using StreamWriter streamWriter = new(SourceFile);
-            streamWriter.Write(jsonString);
-            streamWriter.Close();
-        }
+		private HashSet<Transaction> Transactions { get; } = new HashSet<Transaction>();
 
-        public void ReadAllFromFile()
-        {
-            StreamReader streamReader = new(SourceFile);
-            string jsonString = streamReader.ReadToEnd();
+		public HashSetRepository(string sourceFile = @"..\..\..\transactions.json")
+		{
+			SourceFile = sourceFile;
+			ReadAllFromFile();
+		}
 
-            //transforms a string into Transactions
-            try
-            {
-                WipeRepository(false);
-                foreach (Transaction transaction in JsonConvert.DeserializeObject<HashSet<Transaction>>(jsonString))
-                {
-                    Transactions.Add(transaction);
-                }
-            }
-            catch (Exception)
-            {
-                streamReader.Close();
-                UpdateFile();
-                throw;
-            }
-            finally
-            {
-                if (null != streamReader.BaseStream)
-                    streamReader.Close();
-            }
-        }
+		public void ChangeIOFile(string path)
+		{
+			FileInfo fileInfo = new(path);
 
-        public IEnumerable<Transaction> FilterTransactionsByName(string transactionName)
-        {
-            List<Transaction> listOfFilteredTransactions = new();
+			if (!fileInfo.Directory.Exists)
+			{
+				throw new DirectoryNotFoundException($"Could not find directory: {path}");
+			}
 
-            foreach (Transaction transaction in Transactions)
-            {
-                if (transaction.Name.ToLower() == transactionName.ToLower())
-                {
-                    listOfFilteredTransactions.Add(transaction);
-                }
-            }
+			SourceFile = path;
+		}
 
-            return listOfFilteredTransactions;
-        }
+		public Transaction AddTransaction(Transaction transaction)
+		{
+			if (Transactions.Add(transaction))
+			{
+				UpdateFile();
+				return transaction;
+			}
+			else
+			{
+				return null;
+			}
+		}
 
-        public IEnumerable<Transaction> FilterTransactionsByTypeAndDate(FilterType type, DateTime dateTime)
-        {
-            List<Transaction> listOfFilteredTransactions = new();
+		public IEnumerable<Transaction> GetAllTransactions()
+		{
+			return Transactions;
+		}
 
-            foreach (Transaction transaction in Transactions)
-            {
-                if (FilterType.AfterDate == type && transaction.Date > dateTime)
-                    listOfFilteredTransactions.Add(transaction);
+		public void UpdateFile()
+		{
+			// transforms Transactions into a string
+			string jsonString = JsonConvert.SerializeObject(Transactions, Formatting.Indented);
 
-                if (FilterType.BeforeDate == type && transaction.Date < dateTime)
-                    listOfFilteredTransactions.Add(transaction);
-            }
+			using StreamWriter streamWriter = new(SourceFile);
+			streamWriter.Write(jsonString);
+			streamWriter.Close();
+		}
 
-            return listOfFilteredTransactions;
-        }
+		public void ReadAllFromFile()
+		{
+			StreamReader streamReader = new(SourceFile);
+			string jsonString = streamReader.ReadToEnd();
 
-        public IEnumerable<Transaction> FilterBetweenDates(DateTime start, DateTime end)
-        {
-            List<Transaction> listOfTransactionsBetween = new();
+			//transforms a string into Transactions
+			try
+			{
+				WipeRepository(false);
+				foreach (Transaction transaction in JsonConvert.DeserializeObject<List<Transaction>>(jsonString) ?? new List<Transaction>())
+				{
+					Transactions.Add(transaction);
+				}
+			}
+			catch (Exception)
+			{
+				streamReader.Close();
+				UpdateFile();
+				throw;
+			}
+			finally
+			{
+				if (null != streamReader.BaseStream)
+					streamReader.Close();
+			}
+		}
 
-            foreach (Transaction transaction in Transactions)
-            {
-                if (transaction.Date > start && transaction.Date < end)
-                {
-                    listOfTransactionsBetween.Add(transaction);
-                }
-            }
+		public IEnumerable<Transaction> FilterTransactionsByName(string transactionName)
+		{
+			List<Transaction> listOfFilteredTransactions = new();
 
-            return listOfTransactionsBetween;
-        }
+			foreach (Transaction transaction in Transactions)
+			{
+				if (transaction.Name.ToLower() == transactionName.ToLower())
+				{
+					listOfFilteredTransactions.Add(transaction);
+				}
+			}
 
-        //updates a single transaction with the given id
-        //returns updated transaction if found
-        //returns null if not found
-        public Transaction UpdateTransaction(Transaction transaction)
-        {
-            foreach (Transaction tr in Transactions)
-            {
-                if (tr.Id == transaction.Id)
-                {
-                    tr.Name = transaction.Name;
-                    tr.Type = transaction.Type;
-                    tr.Amount = transaction.Amount;
-                    tr.Date = transaction.Date;
+			return listOfFilteredTransactions;
+		}
 
-                    UpdateFile();
-                    return tr;
-                }
-            }
+		public IEnumerable<Transaction> FilterTransactionsByTypeAndDate(FilterType type, DateTime dateTime)
+		{
+			List<Transaction> listOfFilteredTransactions = new();
 
-            return null;
-        }
+			foreach (Transaction transaction in Transactions)
+			{
+				if (FilterType.AfterDate == type && transaction.Date > dateTime)
+					listOfFilteredTransactions.Add(transaction);
 
-        public IEnumerable<Transaction> FilterTransactionsByDate(DateTime date)
-        {
-            List<Transaction> listOfFilterByDate = new();
+				if (FilterType.BeforeDate == type && transaction.Date < dateTime)
+					listOfFilteredTransactions.Add(transaction);
+			}
 
-            foreach (Transaction transaction in Transactions)
-            {
-                if (transaction.Date.Date == date.Date)
-                {
-                    listOfFilterByDate.Add(transaction);
-                }
-            }
+			return listOfFilteredTransactions;
+		}
 
-            return listOfFilterByDate;
-        }
+		public IEnumerable<Transaction> FilterBetweenDates(DateTime start, DateTime end)
+		{
+			List<Transaction> listOfTransactionsBetween = new();
 
-        public void DeleteTransactionById(Guid id)
-        {
-            foreach (Transaction transaction in Transactions.ToArray())
-            {
-                if (transaction.Id == id)
-                {
-                    Transactions.Remove(transaction);
-                    UpdateFile();
-                }
-            }
-        }
+			foreach (Transaction transaction in Transactions)
+			{
+				if (transaction.Date > start && transaction.Date < end)
+				{
+					listOfTransactionsBetween.Add(transaction);
+				}
+			}
 
-        public void DeleteTransactionsById(IEnumerable<Guid> ids)
-        {
-            foreach (Transaction transaction in Transactions.ToArray())
-            {
-                if (ids.Contains(transaction.Id))
-                {
-                    Transactions.Remove(transaction);
-                }
-            }
-            UpdateFile();
-        }
+			return listOfTransactionsBetween;
+		}
+
+		//updates a single transaction with the given id
+		//returns updated transaction if found
+		//returns null if not found
+		public Transaction UpdateTransaction(Transaction transaction)
+		{
+			foreach (Transaction tr in Transactions)
+			{
+				if (tr.Id == transaction.Id)
+				{
+					tr.Name = transaction.Name;
+					tr.Type = transaction.Type;
+					tr.Amount = transaction.Amount;
+					tr.Date = transaction.Date;
+
+					UpdateFile();
+					return tr;
+				}
+			}
+
+			return null;
+		}
+
+		public IEnumerable<Transaction> FilterTransactionsByDate(DateTime date)
+		{
+			List<Transaction> listOfFilterByDate = new();
+
+			foreach (Transaction transaction in Transactions)
+			{
+				if (transaction.Date.Date == date.Date)
+				{
+					listOfFilterByDate.Add(transaction);
+				}
+			}
+
+			return listOfFilterByDate;
+		}
+
+		public void DeleteTransactionById(Guid id)
+		{
+			foreach (Transaction transaction in Transactions.ToArray())
+			{
+				if (transaction.Id == id)
+				{
+					Transactions.Remove(transaction);
+					UpdateFile();
+				}
+			}
+		}
+
+		public void DeleteTransactionsById(IEnumerable<Guid> ids)
+		{
+			foreach (Transaction transaction in Transactions.ToArray())
+			{
+				if (ids.Contains(transaction.Id))
+				{
+					Transactions.Remove(transaction);
+				}
+			}
+			UpdateFile();
+		}
 
 
-        /// <summary>
-        ///  clears repository of all entities
-        /// </summary>
-        /// <param name="updateFile"> updateFile - true to change local file, false to not change it</param>
+		/// <summary>
+		///  clears repository of all entities
+		/// </summary>
+		/// <param name="updateFile"> updateFile - true to change local file, false to not change it</param>
 
-        public void WipeRepository(bool updateFile = true)
-        {
-            Transactions.Clear();
-            if (updateFile)
-            {
-                UpdateFile();
-            }
-        }
+		public void WipeRepository(bool updateFile = true)
+		{
+			Transactions.Clear();
+			if (updateFile)
+			{
+				UpdateFile();
+			}
+		}
 
-        public Transaction GetTransactionById(Guid id)
-        {
-            return Transactions.FirstOrDefault(transaction => transaction.Id == id);
-        }
+		public Transaction GetTransactionById(Guid id)
+		{
+			return Transactions.FirstOrDefault(transaction => transaction.Id == id);
+		}
 
-        public void DeleteAllByType(TransactionType type)
-        {
-            foreach (Transaction transaction in Transactions.ToArray())
-            {
-                if (transaction.Type == type)
-                {
-                    Transactions.Remove(transaction);
-                }
-            }
-            UpdateFile();
-        }
+		public void DeleteAllByType(TransactionType type)
+		{
+			foreach (Transaction transaction in Transactions.ToArray())
+			{
+				if (transaction.Type == type)
+				{
+					Transactions.Remove(transaction);
+				}
+			}
+			UpdateFile();
+		}
 
-        public IEnumerable<Transaction> FilterTransactionsByValueLessThan(double value)
-        {
-            List<Transaction> listOfTransactionsBigger = new();
+		public IEnumerable<Transaction> FilterTransactionsByValueLessThan(double value)
+		{
+			List<Transaction> listOfTransactionsBigger = new();
 
-            foreach (Transaction transaction in Transactions)
-            {
-                if (value < transaction.Amount)
-                {
-                    listOfTransactionsBigger.Add(transaction);
-                }
-            }
+			foreach (Transaction transaction in Transactions)
+			{
+				if (value < transaction.Amount)
+				{
+					listOfTransactionsBigger.Add(transaction);
+				}
+			}
 
-            return listOfTransactionsBigger;
-        }
+			return listOfTransactionsBigger;
+		}
 
-        public IEnumerable<Transaction> FilterTransactionBeforDateAndBiggerThanAmount(DateTime dateTime, double amount)
-        {
-            List<Transaction> listOfTransactionsBiggerAndDate = new();
+		public IEnumerable<Transaction> FilterTransactionBeforDateAndBiggerThanAmount(DateTime dateTime, double amount)
+		{
+			List<Transaction> listOfTransactionsBiggerAndDate = new();
 
-            foreach (Transaction transaction in Transactions)
-            {
-                if (amount < transaction.Amount && dateTime > transaction.Date)
-                {
-                    listOfTransactionsBiggerAndDate.Add(transaction);
-                }
-            }
+			foreach (Transaction transaction in Transactions)
+			{
+				if (amount < transaction.Amount && dateTime > transaction.Date)
+				{
+					listOfTransactionsBiggerAndDate.Add(transaction);
+				}
+			}
 
-            return listOfTransactionsBiggerAndDate;
-        }
+			return listOfTransactionsBiggerAndDate;
+		}
 
-        public IEnumerable<Transaction> FilterTransactionsByType(TransactionType type)
-        {
-            List<Transaction> listOfTransactionType = new();
+		public IEnumerable<Transaction> FilterTransactionsByType(TransactionType type)
+		{
+			List<Transaction> listOfTransactionType = new();
 
-            foreach (Transaction transaction in Transactions)
-            {
-                if (transaction.Type == type)
-                    listOfTransactionType.Add(transaction);
-            }
+			foreach (Transaction transaction in Transactions)
+			{
+				if (transaction.Type == type)
+					listOfTransactionType.Add(transaction);
+			}
 
-            return listOfTransactionType;
-        }
+			return listOfTransactionType;
+		}
 
-        public IEnumerable<Transaction> FilterTransactionsBeforeDate(DateTime dateTime)
-        {
-            List<Transaction> theTransactionsforedate = new();
+		public IEnumerable<Transaction> FilterTransactionsBeforeDate(DateTime dateTime)
+		{
+			List<Transaction> theTransactionsforedate = new();
 
-            foreach (Transaction transaction in Transactions)
-            {
-                if (transaction.Date < dateTime)
-                    theTransactionsforedate.Add(transaction);
-            }
+			foreach (Transaction transaction in Transactions)
+			{
+				if (transaction.Date < dateTime)
+					theTransactionsforedate.Add(transaction);
+			}
 
-            return theTransactionsforedate;
-        }
+			return theTransactionsforedate;
+		}
 
-        public IEnumerable<Transaction> FilterTransactionsByTypeAndOrderByAmount(TransactionType type)
-        {
-            IEnumerable<Transaction> listOfTypeByAmount = FilterTransactionsByType(type);
+		public IEnumerable<Transaction> FilterTransactionsByTypeAndOrderByAmount(TransactionType type)
+		{
+			IEnumerable<Transaction> listOfTypeByAmount = FilterTransactionsByType(type);
 
-            IEnumerable<Transaction> list = listOfTypeByAmount.OrderBy(transaction => transaction.Amount);
+			IEnumerable<Transaction> list = listOfTypeByAmount.OrderBy(transaction => transaction.Amount);
 
-            return list;
-        }
-
-        public void ChangeIOFile(string path)
-        {
-            throw new NotImplementedException();
-        }
-    }
+			return list;
+		}
+	}
 }

@@ -16,7 +16,7 @@ namespace Layerd
 		}
 
 		private void DisplayFilters()
-        {
+		{
 			UI.DisplayFilters();
 			int command = UI.ReadCommand();
 
@@ -94,7 +94,7 @@ namespace Layerd
 		}
 
 		private void DisplayDeletes()
-        {
+		{
 			UI.DisplayDeletes();
 			int command = UI.ReadCommand();
 
@@ -137,7 +137,6 @@ namespace Layerd
 					}
 			}
 		}
-
 
 		public void Run()
 		{
@@ -185,7 +184,6 @@ namespace Layerd
 								DisplayDeletes();
 								break;
 							}
-
 						case 6:
 							{
 								UI.ShowTypeAmount();
@@ -200,7 +198,12 @@ namespace Layerd
 								UI.DisplayMenu();
 								break;
 							}
-
+						case 8:
+							{
+								if (Domain.IOChangeResult.Failed == UI.ChangeIOFile())
+									Running = false;
+								break;
+							}
 						default:
 							{
 								Console.WriteLine("No such command.");
