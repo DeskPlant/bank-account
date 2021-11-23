@@ -15,6 +15,130 @@ namespace Layerd
 			this.Running = true;
 		}
 
+		private void DisplayFilters()
+        {
+			UI.DisplayFilters();
+			int command = UI.ReadCommand();
+
+			switch (command)
+			{
+				case 0:
+					{
+						UI.DisplayMenu();
+						break;
+					}
+				case 1:
+					{
+						UI.FilterTransactionsByName();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				case 2:
+					{
+						UI.FilterTransactionsByDate();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				case 3:
+					{
+						UI.FilterTransactionsBetweenDates();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				case 4:
+					{
+						UI.FilterTransactionsByValueLessThan();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				case 5:
+					{
+						UI.FilterTransactionsByValueAndDate();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				case 6:
+					{
+						UI.FilterTransactionsByType();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				case 7:
+					{
+						UI.FilterTransactionsByTypeAndOrderByAmount();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				case 8:
+					{
+						UI.DisplayAllTransactions();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				default:
+					{
+						Console.WriteLine("No such command.");
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+			}
+		}
+
+		private void DisplayDeletes()
+        {
+			UI.DisplayDeletes();
+			int command = UI.ReadCommand();
+
+			switch (command)
+			{
+				case 0:
+					{
+						UI.DisplayMenu();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				case 1:
+					{
+						UI.DeleteTransactionsByDate();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				case 2:
+					{
+						UI.DeleteTransactionsBetweenDates();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				case 3:
+					{
+						UI.DeleteTransactionsByType();
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+				default:
+					{
+						Console.WriteLine("No such command.");
+						Console.WriteLine();
+						UI.DisplayMenu();
+						break;
+					}
+			}
+		}
+
+
 		public void Run()
 		{
 			UI.DisplayMenu();
@@ -53,133 +177,12 @@ namespace Layerd
 							}
 						case 4:
 							{
-								UI.DisplayFilters();
-								int command2 = UI.ReadCommand();
-
-								#region Make new function with this region
-#warning Make new function with this region
-								switch (command2)
-								{
-									case 0:
-										{
-											UI.DisplayMenu();
-											break;
-										}
-									case 1:
-										{
-											UI.FilterTransactionsByName();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									case 2:
-										{
-											UI.FilterTransactionsByDate();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									case 3:
-										{
-											UI.FilterTransactionsBetweenDates();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									case 4:
-										{
-											UI.FilterTransactionsByValueLessThan();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									case 5:
-										{
-											UI.FilterTransactionsByValueAndDate();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									case 6:
-										{
-											UI.FilterTransactionsByType();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									case 7:
-										{
-											UI.FilterTransactionsByTypeAndOrderByAmount();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									case 8:
-										{
-											UI.DisplayAllTransactions();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									default:
-										{
-											Console.WriteLine("No such command.");
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-								}
-								#endregion
-
+								DisplayFilters();
 								break;
 							}
 						case 5:
 							{
-								UI.DisplayDeletes();
-								int command3 = UI.ReadCommand();
-
-								#region Make new function with this region
-#warning Make new function with this region
-								switch (command3)
-								{
-									case 0:
-										{
-											UI.DisplayMenu();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									case 1:
-										{
-											UI.DeleteTransactionsByDate();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									case 2:
-										{
-											UI.DeleteTransactionsBetweenDates();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									case 3:
-										{
-											UI.DeleteTransactionsByType();
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-									default:
-										{
-											Console.WriteLine("No such command.");
-											Console.WriteLine();
-											UI.DisplayMenu();
-											break;
-										}
-								}
-								#endregion
-
+								DisplayDeletes();
 								break;
 							}
 

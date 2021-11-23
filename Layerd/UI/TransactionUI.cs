@@ -299,8 +299,6 @@ namespace Layerd.UI
 					case "n":
 						{
 							Console.WriteLine();
-#warning Enter new command should be in the looping menu in BankAccounts.cs
-							Console.WriteLine("Enter new command");
 							break;
 						}
 					default:

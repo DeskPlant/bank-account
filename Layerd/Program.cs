@@ -8,7 +8,9 @@ namespace Layerd
 	{
 		public static void Main()
 		{
-			IRepository repository = new HashSetRepository();
+			System.Console.ForegroundColor = System.ConsoleColor.Magenta;
+			// IRepository repository = new HashSetRepository();
+			IRepository repository = new DictionaryRepository();
 			IService service = new TransactionService(repository);
 			IUI ui = new TransactionUI(service);
 

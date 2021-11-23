@@ -11,6 +11,8 @@ namespace Layerd.Repository
 	//delete    delete some stuff from file
 	public interface IRepository
 	{
+		public void ChangeIOFile(string path);
+
 		public void WipeRepository(bool updateFile);
 
 		public Transaction AddTransaction(Transaction transaction);
